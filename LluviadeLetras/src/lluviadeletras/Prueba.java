@@ -9,6 +9,6 @@ package lluviadeletras;
  *
  * @author Vic
  */
-public class Vista {
+public class Prueba {
     
 }
