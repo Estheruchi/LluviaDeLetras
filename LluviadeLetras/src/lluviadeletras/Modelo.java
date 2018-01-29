@@ -11,6 +11,9 @@ package lluviadeletras;
  */
 public class Modelo {
 
-    public Modelo() {
+    private Controlador controlador;
+
+    public Modelo(Controlador controlador) {
+        this.controlador = controlador;
     }
 }
