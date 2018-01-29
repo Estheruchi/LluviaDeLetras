@@ -31,11 +31,11 @@ public class Controlador implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if(e.getKeyChar()==KeyEvent.VK_LEFT){
+        if (e.getKeyChar() == KeyEvent.VK_LEFT) {
             //modelo.mueveLaBarraDerecha();
         }
-        
-        if(e.getExtendedKeyCode()==KeyEvent.VK_RIGHT){
+
+        if (e.getExtendedKeyCode() == KeyEvent.VK_RIGHT) {
             //modelo.mueveLaBarraDerecha();
         }
     }
@@ -50,22 +50,16 @@ public class Controlador implements KeyListener, ActionListener {
         switch (e.getActionCommand()) {
             case "Guardar":
                 break;
-                //modelo.guardarPartida();
+            //modelo.guardarPartida();
             case "Cargar":
                 break;
-                //modelo.cargarPartida();
+            //modelo.cargarPartida();
             case "Salir":
                 //vista.salirApp();
                 break;
-            case "Nivel 1":
+            default:
+                System.out.println(e.getActionCommand());
                 break;
-            case "Nivel 2":
-                break;
-            case "Nivel 3":
-                break;
-            case "Nivel 4":
-                break;
-            case "Nivel 5":
 
         }
     }

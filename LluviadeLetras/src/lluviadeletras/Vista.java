@@ -5,6 +5,7 @@
  */
 package lluviadeletras;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,9 +20,11 @@ public class Vista extends JFrame {
     /*CONSTANTES*/
     private static final int ALTO = 600;
     private static final int ANCHO = 600;
+    private static final int NUM_NIVELES = 5;
 
     private Controlador control;
     private JMenuBar mbMenu;
+    private ArrayList<JMenuItem> niveles;
 
     public Vista(Controlador control) {
         this.control = control;
@@ -31,9 +34,9 @@ public class Vista extends JFrame {
     public void crearInterfaz() {
         this.setLayout(null);
         this.setSize(ANCHO, ALTO);
-        this.setVisible(true);
         this.setResizable(false);
         crearMenu();
+        this.setVisible(true);
     }
 
     public void crearMenu() {
@@ -63,7 +66,17 @@ public class Vista extends JFrame {
 
     public void crearMenuNivel() {
         JMenu mNivel = new JMenu("Nivel");
+        niveles = new ArrayList();
+        mbMenu.add(mNivel);
 
+        for (int i = 0; i < NUM_NIVELES; i++) {
+            JMenuItem miLvl = new JMenuItem("Nivel " + (i + 1));
+            miLvl.addActionListener(control);
+            niveles.add(miLvl);
+            mNivel.add(miLvl);
+        }
+
+        /*
         JMenuItem miLvl1 = new JMenuItem("Nivel 1");
         miLvl1.addActionListener(control);
 
@@ -84,6 +97,6 @@ public class Vista extends JFrame {
         mNivel.add(miLvl2);
         mNivel.add(miLvl3);
         mNivel.add(miLvl4);
-        mNivel.add(miLvl5);
+        mNivel.add(miLvl5);*/
     }
 }
