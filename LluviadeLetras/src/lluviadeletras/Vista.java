@@ -76,6 +76,8 @@ public class Vista extends JFrame {
             mNivel.add(miLvl);
         }
 
+        //Estoy online
+        //por fin
         /*
         JMenuItem miLvl1 = new JMenuItem("Nivel 1");
         miLvl1.addActionListener(control);
