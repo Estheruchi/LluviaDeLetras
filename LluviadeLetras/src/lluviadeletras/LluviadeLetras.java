@@ -8,9 +8,7 @@ package lluviadeletras;
 public class LluviadeLetras {
 
     public static void main(String[] args) {
-        Modelo modelo = new Modelo();
-        //prueba rueba
-        //cambio
+        Controlador control = new Controlador();
     }
 
 }

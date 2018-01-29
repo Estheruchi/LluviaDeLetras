@@ -11,7 +11,9 @@ package lluviadeletras;
  */
 public class Modelo {
 
-    public Modelo() {  
-        //proband
+    private Controlador control;
+
+    public Modelo(Controlador control) {
+        this.control = control;
     }
 }
