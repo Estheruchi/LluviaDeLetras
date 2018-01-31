@@ -75,28 +75,5 @@ public class Vista extends JFrame {
             niveles.add(miLvl);
             mNivel.add(miLvl);
         }
-
-        /*
-        JMenuItem miLvl1 = new JMenuItem("Nivel 1");
-        miLvl1.addActionListener(control);
-
-        JMenuItem miLvl2 = new JMenuItem("Nivel 2");
-        miLvl2.addActionListener(control);
-
-        JMenuItem miLvl3 = new JMenuItem("Nivel 3");
-        miLvl3.addActionListener(control);
-
-        JMenuItem miLvl4 = new JMenuItem("Nivel 4");
-        miLvl4.addActionListener(control);
-
-        JMenuItem miLvl5 = new JMenuItem("Nivel 5");
-        miLvl5.addActionListener(control);
-
-        mbMenu.add(mNivel);
-        mNivel.add(miLvl1);
-        mNivel.add(miLvl2);
-        mNivel.add(miLvl3);
-        mNivel.add(miLvl4);
-        mNivel.add(miLvl5);*/
     }
 }
