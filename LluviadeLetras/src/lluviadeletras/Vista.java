@@ -34,6 +34,7 @@ public class Vista extends JFrame {
         this.setResizable(false);
         crearMenu();
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void crearMenu() {
