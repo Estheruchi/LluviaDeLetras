@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**/
 package lluviadeletras;
 
 import java.util.ArrayList;
@@ -28,6 +24,7 @@ public class Vista extends JFrame {
 
     public Vista(Controlador control) {
         this.control = control;
+        this.addKeyListener(control);
         crearInterfaz();
     }
 
@@ -76,4 +73,22 @@ public class Vista extends JFrame {
             mNivel.add(miLvl);
         }
     }
+
+    public void dibujarBandeja(Bandeja bandeja) {
+        this.add(bandeja);
+        refrescar();
+    }
+
+    public void refrescar() {
+        this.repaint();
+    }
+
+    public static int getALTO() {
+        return ALTO;
+    }
+
+    public static int getANCHO() {
+        return ANCHO;
+    }
+
 }

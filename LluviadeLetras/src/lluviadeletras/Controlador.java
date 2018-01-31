@@ -31,12 +31,12 @@ public class Controlador implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == KeyEvent.VK_LEFT) {
-            //modelo.mueveLaBarraDerecha();
+        if (e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
+            modelo.moverIzqda();
         }
 
         if (e.getExtendedKeyCode() == KeyEvent.VK_RIGHT) {
-            //modelo.mueveLaBarraDerecha();
+            modelo.moverDcha();
         }
     }
 
@@ -62,5 +62,20 @@ public class Controlador implements KeyListener, ActionListener {
                 break;
 
         }
+    }
+
+    /*METODOS*/
+    public void dibujarBandeja(Bandeja bandeja) {
+        vista.dibujarBandeja(bandeja);
+    }
+
+    public int anchoVentana() {
+        int anchoVista = vista.getANCHO();
+        return anchoVista;
+    }
+
+    public int altoVentana() {
+        int altoVista = vista.getALTO();
+        return altoVista;
     }
 }
