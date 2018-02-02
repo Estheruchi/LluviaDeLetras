@@ -17,9 +17,9 @@ import javax.swing.Timer;
 public class Modelo {
 
     private int NUM_LETRAS = 25;
-    private final String[] ABC = {"a", "b", "c", "d", "f", "g",
-        "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-        "u", "v", "w", "x", "y", "z"};
+    private final String[] ABC = {"A", "B", "C", "D", "F", "G",
+        "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+        "U", "V", "W", "X", "Y", "Z"};
 
     private int tiempoCaida = 100;
     private int tiempoCreacion = 1000;
@@ -27,6 +27,8 @@ public class Modelo {
     private Controlador control;
     private Bandeja bandeja;
     private ArrayList<Letra> letras;
+    private Timer temporizadorCrear;
+    private Timer temporizadorCaer;
 
     public Modelo(Controlador control) {
         this.control = control;
@@ -72,37 +74,42 @@ public class Modelo {
             System.out.println("CAE " + indice);
             System.out.println(letras.get(indice));
             letras.get(indice).setEstado(true);
-            //letras.get(indice).setVisible(true);
             control.dibujarLetra(letras.get(indice));
+            letras.get(indice).setText(ABC[indice]);
             timerCaer(letras.get(indice));
-            //letras.get(indice).mover();
         } else {
             letraAleatoria();
         }
     }
 
     public void timerCaer(Letra letra) {
-        Timer temporizador = new Timer(tiempoCaida, new ActionListener() {
+        temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 letra.mover();
             }
         });
-        temporizador.start();
+        temporizadorCaer.start();
     }
 
     public void timerCrear() {
-        Timer temporizador = new Timer(tiempoCreacion, new ActionListener() {
+        temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 letraAleatoria();
             }
         });
-        temporizador.start();
+        temporizadorCrear.start();
     }
 
     public int getTiempoCaida() {
         return tiempoCaida;
+    }
+
+    public void fin() {
+        temporizadorCaer.stop();
+        temporizadorCrear.stop();
+        control.fin();
     }
 
 }
