@@ -65,6 +65,10 @@ public class Controlador implements KeyListener, ActionListener {
         vista.dibujarBandeja(bandeja);
     }
 
+    public void dibujarLetra(Letra letra) {
+        vista.dibujarLetra(letra);
+    }
+
     public int anchoVentana() {
         int anchoVista = vista.getANCHO();
         return anchoVista;

@@ -80,6 +80,11 @@ public class Vista extends JFrame {
         refrescar();
     }
 
+    public void dibujarLetra(Letra letra) {
+        this.add(letra);
+        refrescar();
+    }
+
     public void refrescar() {
         this.repaint();
     }

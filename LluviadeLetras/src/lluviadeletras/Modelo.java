@@ -21,7 +21,7 @@ public class Modelo {
         "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
         "u", "v", "w", "x", "y", "z"};
 
-    private int tiempoCaida = 10;
+    private int tiempoCaida = 100;
     private int tiempoCreacion = 1000;
 
     private Controlador control;
@@ -66,24 +66,29 @@ public class Modelo {
     }
 
     public void letraAleatoria() {
-        int indice = (int) Math.floor(Math.random() * 25);
-        if (comprobar()) {
+        int indice = (int) Math.floor(Math.random() * 24);
+
+        if (!letras.get(indice).isEstado()) {
             System.out.println("CAE " + indice);
             System.out.println(letras.get(indice));
             letras.get(indice).setEstado(true);
-            letras.get(indice).setVisible(true);
+            //letras.get(indice).setVisible(true);
+            control.dibujarLetra(letras.get(indice));
+            timerCaer(letras.get(indice));
+            //letras.get(indice).mover();
         } else {
             letraAleatoria();
         }
     }
 
-    public boolean comprobar() {
-        for (int i = 0; i < letras.size(); i++) {
-            if (!letras.get(i).isEstado()) {
-                return true;
+    public void timerCaer(Letra letra) {
+        Timer temporizador = new Timer(tiempoCaida, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                letra.mover();
             }
-        }
-        return false;
+        });
+        temporizador.start();
     }
 
     public void timerCrear() {
@@ -95,4 +100,9 @@ public class Modelo {
         });
         temporizador.start();
     }
+
+    public int getTiempoCaida() {
+        return tiempoCaida;
+    }
+
 }

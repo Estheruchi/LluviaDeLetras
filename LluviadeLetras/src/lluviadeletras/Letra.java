@@ -18,6 +18,7 @@ public class Letra extends JButton {
     /*VARIABLES COMUNES*/
     private static final int ALTO = 50;
     private static final int ANCHO = 50;
+    private static int AVANCE = 10;
 
     /*VARIABLES DE CADA PANEL*/
     private Modelo modelo;
@@ -28,7 +29,6 @@ public class Letra extends JButton {
     /*TRUE: CAYENDO FALSE: OCULTO*/
     private int posX;
     private int posY = - 50;
-
 
     /*CONSTRUCTOR*/
     public Letra(Modelo modelo, String letra) {
@@ -65,4 +65,14 @@ public class Letra extends JButton {
         this.setBounds(posX, posY, ALTO, ANCHO);
     }
 
+    public void mover() {
+
+        if (posY >= modelo.altoVentana()) {
+            posY = -100;
+        } else {
+            posY += AVANCE;
+        }
+
+        this.setLocation(posX, posY);
+    }
 }
