@@ -54,6 +54,7 @@ public class Letra extends JButton {
         int b = (int) Math.round(Math.random() * 255);
         color = new Color(r, g, b);
         this.setBackground(color);
+        this.setOpaque(true);
     }
 
     public void generarPosicion() {
