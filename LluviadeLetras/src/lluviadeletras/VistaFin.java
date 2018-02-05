@@ -23,7 +23,7 @@ public class VistaFin extends JFrame {
 
     public VistaFin(Controlador control) {
         this.control = control;
-        this.crearInterfaz();
+        crearInterfaz();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
