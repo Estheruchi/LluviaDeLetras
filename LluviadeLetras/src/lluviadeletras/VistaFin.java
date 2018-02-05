@@ -31,7 +31,9 @@ public class VistaFin extends JFrame {
     public void crearInterfaz() {
         JLabel titulo = new JLabel("GAME OVER");
         this.add(titulo);
+        titulo.setBounds(100, 100, 100, 50);
         JButton reintentar = new JButton("REINTENTAR");
+        reintentar.setBounds(200, 200, 100, 100);
         this.add(reintentar);
 
         this.setLayout(null);
