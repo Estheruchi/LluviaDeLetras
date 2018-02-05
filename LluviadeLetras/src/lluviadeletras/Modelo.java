@@ -75,12 +75,29 @@ public class Modelo {
         if (!letras.get(indice).isEstado()) {
             System.out.println("CAE " + indice);
             System.out.println(letras.get(indice));
+
             letras.get(indice).setEstado(true);
+            letras.get(indice).setPosY(-50);
+
             control.dibujarLetra(letras.get(indice));
             letras.get(indice).setText(ABC[indice]);
             timerCaer(letras.get(indice));
         } else {
             letraAleatoria();
+        }
+    }
+
+    public void buscarLetra(String letra) {
+        letra = letra.toUpperCase();
+        for (int i = 0; i < letras.size(); i++) {
+            if (letras.get(i).getText().equals(letra)) {
+
+                letras.get(i).setVisible(false);
+                letras.get(i).setEstado(false);
+                letras.get(i).setPosY(-50);
+
+                //PARAR TEMPORIZADOR DE LA LETRA
+            }
         }
     }
 

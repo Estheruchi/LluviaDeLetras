@@ -85,6 +85,10 @@ public class Vista extends JFrame {
         refrescar();
     }
 
+    public void fallo() {
+        //Parpadeo que avisa de fallo 
+    }
+
     public void refrescar() {
         this.repaint();
     }
