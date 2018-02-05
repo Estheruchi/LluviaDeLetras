@@ -27,12 +27,14 @@ public class Modelo {
     private Controlador control;
     private Bandeja bandeja;
     private ArrayList<Letra> letras;
+    private ArrayList<Timer> tiemposCaida;
     private Timer temporizadorCrear;
-    private Timer temporizadorCaer;
+    //private Timer temporizadorCaer;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
+        tiemposCaida = new ArrayList();
         manejarBandeja();
         crearLetras();
         timerCrear();
@@ -83,13 +85,14 @@ public class Modelo {
     }
 
     public void timerCaer(Letra letra) {
-        temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
+        Timer temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 letra.mover();
             }
         });
         temporizadorCaer.start();
+        tiemposCaida.add(temporizadorCaer);
     }
 
     public void timerCrear() {
@@ -106,8 +109,14 @@ public class Modelo {
         return tiempoCaida;
     }
 
+    public void pararCaida() {
+        for (int i = 0; i < tiemposCaida.size(); i++) {
+            tiemposCaida.get(i).stop();
+        }
+    }
+
     public void fin() {
-        temporizadorCaer.stop();
+        pararCaida();
         temporizadorCrear.stop();
         control.fin();
     }

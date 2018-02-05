@@ -68,9 +68,9 @@ public class Letra extends JButton {
 
     public void mover() {
 
-        if (posY >= modelo.altoVentana()) {
+        if (posY >= (modelo.altoVentana() - 100)) {
             modelo.fin();
-            posY = -100;
+            //posY = -100;
         } else {
             posY += AVANCE;
         }
