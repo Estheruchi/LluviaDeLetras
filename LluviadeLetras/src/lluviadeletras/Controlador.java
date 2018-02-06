@@ -34,15 +34,12 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (e.getExtendedKeyCode()) {
-            case KeyEvent.VK_LEFT:
-                modelo.moverIzqda();
-                break;
-            case KeyEvent.VK_RIGHT:
-                modelo.moverDcha();
-                break;
-            default:
-                modelo.buscarLetra("" + e.getKeyChar());
+        if (e.getExtendedKeyCode() == KeyEvent.VK_LEFT) {
+            modelo.moverIzqda();
+        }
+
+        if (e.getExtendedKeyCode() == KeyEvent.VK_RIGHT) {
+            modelo.moverDcha();
         }
     }
 
@@ -61,7 +58,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
             //modelo.cargarPartida();
             case "Salir":
-                //vista.salirApp();
+            //vista.salirApp();
                 break;
             default:
                 System.out.println(e.getActionCommand());
@@ -90,8 +87,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     }
 
     public void fin() {
-        vista.dispose();
-        //System.exit(0);
+        //vista.dispose();
         VistaFin vfin = new VistaFin(this);
     }
 }
