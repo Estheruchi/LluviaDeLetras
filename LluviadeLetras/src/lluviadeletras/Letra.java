@@ -48,6 +48,10 @@ public class Letra extends JButton {
         return estado;
     }
 
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
     public void generarColor() {
         int r = (int) Math.round(Math.random() * 255);
         int g = (int) Math.round(Math.random() * 255);
@@ -68,7 +72,7 @@ public class Letra extends JButton {
 
     public void mover() {
 
-        if (posY >= modelo.altoVentana()) {
+        if (posY >= (modelo.altoVentana() - 100)) {
             modelo.fin();
             //posY = -100;
         } else {
@@ -77,4 +81,5 @@ public class Letra extends JButton {
 
         this.setLocation(posX, posY);
     }
+
 }

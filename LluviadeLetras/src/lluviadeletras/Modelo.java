@@ -27,12 +27,14 @@ public class Modelo {
     private Controlador control;
     private Bandeja bandeja;
     private ArrayList<Letra> letras;
+    private ArrayList<Timer> tiemposCaida;
     private Timer temporizadorCrear;
-    private Timer temporizadorCaer;
+    //private Timer temporizadorCaer;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
+        tiemposCaida = new ArrayList();
         manejarBandeja();
         crearLetras();
         timerCrear();
@@ -73,7 +75,10 @@ public class Modelo {
         if (!letras.get(indice).isEstado()) {
             System.out.println("CAE " + indice);
             System.out.println(letras.get(indice));
+
             letras.get(indice).setEstado(true);
+            letras.get(indice).setPosY(-50);
+
             control.dibujarLetra(letras.get(indice));
             letras.get(indice).setText(ABC[indice]);
             timerCaer(letras.get(indice));
@@ -82,14 +87,29 @@ public class Modelo {
         }
     }
 
+    public void buscarLetra(String letra) {
+        letra = letra.toUpperCase();
+        for (int i = 0; i < letras.size(); i++) {
+            if (letras.get(i).getText().equals(letra)) {
+
+                letras.get(i).setVisible(false);
+                letras.get(i).setEstado(false);
+                letras.get(i).setPosY(-50);
+
+                //PARAR TEMPORIZADOR DE LA LETRA
+            }
+        }
+    }
+
     public void timerCaer(Letra letra) {
-        temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
+        Timer temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 letra.mover();
             }
         });
         temporizadorCaer.start();
+        tiemposCaida.add(temporizadorCaer);
     }
 
     public void timerCrear() {
@@ -106,8 +126,14 @@ public class Modelo {
         return tiempoCaida;
     }
 
+    public void pararCaida() {
+        for (int i = 0; i < tiemposCaida.size(); i++) {
+            tiemposCaida.get(i).stop();
+        }
+    }
+
     public void fin() {
-        temporizadorCaer.stop();
+        pararCaida();
         temporizadorCrear.stop();
         control.fin();
     }
