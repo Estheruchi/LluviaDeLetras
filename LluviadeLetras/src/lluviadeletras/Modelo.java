@@ -29,15 +29,19 @@ public class Modelo {
     private ArrayList<Letra> letras;
     private ArrayList<Timer> tiemposCaida;
     private Timer temporizadorCrear;
+    private int idTimer;
     //private Timer temporizadorCaer;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
         tiemposCaida = new ArrayList();
+        this.idTimer = 0;
+
         manejarBandeja();
         crearLetras();
         timerCrear();
+
     }
 
     public void manejarBandeja() {
@@ -108,6 +112,8 @@ public class Modelo {
                 letra.mover();
             }
         });
+        letra.setIdTimer(idTimer);
+        idTimer++;
         temporizadorCaer.start();
         tiemposCaida.add(temporizadorCaer);
     }

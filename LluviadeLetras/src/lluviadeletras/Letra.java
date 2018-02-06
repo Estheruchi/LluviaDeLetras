@@ -25,6 +25,7 @@ public class Letra extends JButton {
     private Color color;
     private String letra;
     private boolean estado;
+    private int idTimer;
 
     /*TRUE: CAYENDO FALSE: OCULTO*/
     private int posX;
@@ -80,6 +81,14 @@ public class Letra extends JButton {
         }
 
         this.setLocation(posX, posY);
+    }
+
+    public int getIdTimer() {
+        return idTimer;
+    }
+
+    public void setIdTimer(int idTimer) {
+        this.idTimer = idTimer;
     }
 
 }
