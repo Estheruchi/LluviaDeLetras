@@ -33,6 +33,7 @@ public class Letra extends JButton {
 
     /*CONSTRUCTOR*/
     public Letra(Modelo modelo, String letra) {
+        this.idTimer = -1;
         this.modelo = modelo;
         this.letra = letra;
         this.estado = false;

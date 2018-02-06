@@ -91,7 +91,10 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     public void fin() {
         vista.dispose();
-        //System.exit(0);
         VistaFin vfin = new VistaFin(this);
+    }
+
+    public void refrescar() {
+        vista.refrescar();
     }
 }

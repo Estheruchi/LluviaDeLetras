@@ -77,6 +77,7 @@ public class Modelo {
         int indice = (int) Math.floor(Math.random() * 24);
 
         if (!letras.get(indice).isEstado()) {
+
             System.out.println("CAE " + indice);
             System.out.println(letras.get(indice));
 
@@ -85,7 +86,18 @@ public class Modelo {
 
             control.dibujarLetra(letras.get(indice));
             letras.get(indice).setText(ABC[indice]);
-            timerCaer(letras.get(indice));
+
+            if (letras.get(indice).getIdTimer() != -1) {
+                System.out.println("PRIMERA CAIDA");
+                letras.get(indice).setVisible(true);
+                tiemposCaida.get((letras.get(indice).getIdTimer())).start();
+            } else {
+                timerCaer(letras.get(indice));
+                System.out.println("VUELVE A CAER");
+                letras.get(indice).setVisible(true);
+
+            }
+            control.refrescar();
         } else {
             letraAleatoria();
         }
@@ -95,12 +107,10 @@ public class Modelo {
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             if (letras.get(i).getText().equals(letra)) {
-
                 letras.get(i).setVisible(false);
                 letras.get(i).setEstado(false);
                 letras.get(i).setPosY(-50);
-
-                //PARAR TEMPORIZADOR DE LA LETRA
+                tiemposCaida.get((letras.get(i).getIdTimer())).stop();
             }
         }
     }
