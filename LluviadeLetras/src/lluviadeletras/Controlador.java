@@ -58,7 +58,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
             //modelo.cargarPartida();
             case "Salir":
-                //vista.salirApp();
+            //vista.salirApp();
                 break;
             default:
                 System.out.println(e.getActionCommand());
@@ -87,7 +87,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     }
 
     public void fin() {
-        vista.dispose();
+        //vista.dispose();
         VistaFin vfin = new VistaFin(this);
     }
 }
