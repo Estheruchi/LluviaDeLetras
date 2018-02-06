@@ -23,7 +23,7 @@ public class VistaFin extends JFrame {
 
     public VistaFin(Controlador control) {
         this.control = control;
-        crearInterfaz();
+        this.crearInterfaz();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
@@ -31,9 +31,7 @@ public class VistaFin extends JFrame {
     public void crearInterfaz() {
         JLabel titulo = new JLabel("GAME OVER");
         this.add(titulo);
-        titulo.setBounds(100, 100, 100, 50);
         JButton reintentar = new JButton("REINTENTAR");
-        reintentar.setBounds(200, 200, 150, 50);
         this.add(reintentar);
 
         this.setLayout(null);
