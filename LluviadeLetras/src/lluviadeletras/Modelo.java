@@ -111,18 +111,20 @@ public class Modelo {
         if (!auxiliar.isEstado()) {
 
             auxiliar.setEstado(true);
-            auxiliar.setPosY(-50);
+            auxiliar.setPosY(-100);
 
             control.dibujarLetra(auxiliar);
             auxiliar.setText(ABC[indice]);
 
             if (auxiliar.getIdTimer() != -1) {
                 auxiliar.setVisible(true);
+                auxiliar.setEnabled(true);
                 tiemposCaida.get((auxiliar.getIdTimer())).start();
 
             } else {
                 timerCaer(auxiliar);
                 auxiliar.setVisible(true);
+                auxiliar.setEnabled(true);
 
             }
             control.refrescar();
@@ -145,7 +147,8 @@ public class Modelo {
 
                 auxiliar.setVisible(false);
                 auxiliar.setEstado(false);
-                auxiliar.setPosY(-50);
+                auxiliar.setEnabled(false);
+                auxiliar.setPosY(-100);
 
                 tiemposCaida.get(auxiliar.getIdTimer()).stop();
             }
