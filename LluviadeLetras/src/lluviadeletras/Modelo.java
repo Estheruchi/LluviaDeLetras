@@ -147,8 +147,7 @@ public class Modelo {
                 auxiliar.setEstado(false);
                 auxiliar.setPosY(-50);
 
-                tiemposCaida.get(auxiliar.getIdTimer())
-                ).stop();
+                tiemposCaida.get(auxiliar.getIdTimer()).stop();
             }
         }
     }
