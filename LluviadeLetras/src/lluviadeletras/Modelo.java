@@ -106,23 +106,23 @@ public class Modelo {
      */
     public void letraAleatoria() {
         int indice = (int) Math.floor(Math.random() * 24);
-        Letra generada = letras.get(indice);
+        Letra auxiliar = letras.get(indice);
 
-        if (!generada.isEstado()) {
+        if (!auxiliar.isEstado()) {
 
-            generada.setEstado(true);
-            generada.setPosY(-50);
+            auxiliar.setEstado(true);
+            auxiliar.setPosY(-50);
 
-            control.dibujarLetra(generada);
-            generada.setText(ABC[indice]);
+            control.dibujarLetra(auxiliar);
+            auxiliar.setText(ABC[indice]);
 
-            if (generada.getIdTimer() != -1) {
-                generada.setVisible(true);
-                tiemposCaida.get((generada.getIdTimer())).start();
+            if (auxiliar.getIdTimer() != -1) {
+                auxiliar.setVisible(true);
+                tiemposCaida.get((auxiliar.getIdTimer())).start();
 
             } else {
-                timerCaer(generada);
-                generada.setVisible(true);
+                timerCaer(auxiliar);
+                auxiliar.setVisible(true);
 
             }
             control.refrescar();
@@ -138,14 +138,17 @@ public class Modelo {
      */
     public void buscarLetra(String letra) {
         letra = letra.toUpperCase();
+
         for (int i = 0; i < letras.size(); i++) {
-            if (letras.get(i).getText().equals(letra)) {
+            Letra auxiliar = letras.get(i);
+            if (auxiliar.getText().equals(letra)) {
 
-                letras.get(i).setVisible(false);
-                letras.get(i).setEstado(false);
-                letras.get(i).setPosY(-50);
+                auxiliar.setVisible(false);
+                auxiliar.setEstado(false);
+                auxiliar.setPosY(-50);
 
-                tiemposCaida.get((letras.get(i).getIdTimer())).stop();
+                tiemposCaida.get(auxiliar.getIdTimer())
+                ).stop();
             }
         }
     }
