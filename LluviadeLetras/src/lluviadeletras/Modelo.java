@@ -35,7 +35,8 @@ public class Modelo {
     private int contador = 0;
     private int aciertos;
     private boolean primeraLetra = false;
-    private int tiempoCrear=1000;
+    private int tiempo = 1000;
+    private int velocidadLetras;
 
     public Modelo(Controlador control) {
         this.control = control;
@@ -54,24 +55,28 @@ public class Modelo {
         }*/
         switch (lvl) {
             case "NIVEL 1":
-
-                //velocidadLetras = 5;
-                //numLetras = 5;
-                //tiempoCrear = 100;
+                velocidadLetras = 5;
+                tiempo = 1000;
                 break;
-
             case "NIVEL 2":
-
+                velocidadLetras = 9;
+                tiempo = 700;
                 break;
             case "NIVEL 3":
-
+                velocidadLetras = 13;
+                tiempo = 500;
                 break;
             case "NIVEL 4":
-
+                velocidadLetras = 17;
+                tiempo = 250;
                 break;
             case "NIVEL 5":
-
+                velocidadLetras = 21;
+                tiempo = 100;
                 break;
+        }
+        for (int i = 0; i < letras.size(); i++) {
+            letras.get(i).setVELOCIDAD(velocidadLetras);
         }
     }
 
@@ -167,30 +172,28 @@ public class Modelo {
 
     //para eliminar la letra que se pulsa si coincide
     public void buscarLetra(String letra) {
-        boolean bandera=true;
+        boolean bandera = true;
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
-            
+
             if (auxiliar.getText().equals(letra)) {
                 letras.remove(i);
                 auxiliar.setVisible(false);
                 aciertos++;
                 control.dileVistaActualizaCont(aciertos);
-                bandera=false;
+                bandera = false;
             }
-            
+
         }
-        if(bandera){
-            
+        if (bandera) {
+
             aciertos--;
             comprobarAciertos();
             control.dileVistaActualizaCont(aciertos);
-            
+
         }
-        
-        
-        
+
     }
 
     public void timerCrear() {
@@ -198,12 +201,12 @@ public class Modelo {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (contador == 0 || contador == tiempoCrear) {
+                if (contador <= 0 || contador >= tiempo) {
                     letraAleatoria();
                 }
                 contador += 50;
 
-                if (contador == tiempoCrear) {
+                if (contador >= tiempo) {
                     contador = 0;
                 }
                 for (int i = 0; i < letras.size(); i++) {
@@ -234,10 +237,9 @@ public class Modelo {
         }
 
     }
-    
-    
-    public void comprobarAciertos(){
-        if(aciertos<0){
+
+    public void comprobarAciertos() {
+        if (aciertos < 0) {
             fin();
         }
     }
