@@ -18,14 +18,15 @@ public class Letra extends JButton {
     /*VARIABLES COMUNES*/
     private static final int ALTO = 50;
     private static final int ANCHO = 50;
-    private static int AVANCE = 10;
+    private static int VELOCIDAD = 5;
 
     /*VARIABLES DE CADA PANEL*/
     private Modelo modelo;
     private Color color;
     private String letra;
-    private boolean estado;
-    private int idTimer;
+    private boolean estado; //si ha salido o no
+    //private int direccion; 
+
 
     /*TRUE: CAYENDO FALSE: OCULTO*/
     private int posX;
@@ -33,13 +34,14 @@ public class Letra extends JButton {
 
     /*CONSTRUCTOR*/
     public Letra(Modelo modelo, String letra) {
-        this.idTimer = -1;
         this.modelo = modelo;
         this.letra = letra;
         this.estado = false;
+
         generarColor();
         generarPosicion();
         dibujarPanel();
+
     }
 
     public void setEstado(boolean estado) {
@@ -68,7 +70,6 @@ public class Letra extends JButton {
     }
 
     public void dibujarPanel() {
-        //this.addActionListener(control);
         this.setBounds(posX, posY, ALTO, ANCHO);
     }
 
@@ -78,18 +79,12 @@ public class Letra extends JButton {
             modelo.fin();
             //posY = -100;
         } else {
-            posY += AVANCE;
+            posY += VELOCIDAD;
         }
 
         this.setLocation(posX, posY);
     }
-
-    public int getIdTimer() {
-        return idTimer;
-    }
-
-    public void setIdTimer(int idTimer) {
-        this.idTimer = idTimer;
-    }
+    
+    
 
 }

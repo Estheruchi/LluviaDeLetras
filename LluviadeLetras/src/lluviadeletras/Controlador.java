@@ -97,4 +97,8 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     public void refrescar() {
         vista.refrescar();
     }
+
+    public void dileVistaActualizaCont(int contador) {
+        vista.actualizaContador(contador);
+    }
 }

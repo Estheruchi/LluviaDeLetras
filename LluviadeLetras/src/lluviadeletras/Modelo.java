@@ -16,29 +16,28 @@ import javax.swing.Timer;
  */
 public class Modelo {
 
+    private int NUM_LETRAS_NIVEL;
     private int NUM_LETRAS = 25;
+
     private final String[] ABC = {"A", "B", "C", "D", "F", "G",
         "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
         "U", "V", "W", "X", "Y", "Z"};
 
-    private int tiempoCaida = 100;
-    private int tiempoCreacion = 1000;
+    private int tiempoCreacion = 100;
 
     private Controlador control;
     private Bandeja bandeja;
 
     private ArrayList<Letra> letras;
-    private ArrayList<Timer> tiemposCaida;
 
     private Timer temporizadorCrear;
-    private int idTimer;
     private int puntuacion;
+    private int contador = 0;
+    private int aciertos;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
-        tiemposCaida = new ArrayList();
-        this.idTimer = 0;
         this.puntuacion = 0;
 
         manejarBandeja();
@@ -103,95 +102,93 @@ public class Modelo {
      * Si encuentra que no esta cayendo, si es la primera vez crea un timer si
      * ya habia caido, vuelve a iniciar su timer.
      *
+     * //
      */
     public void letraAleatoria() {
         int indice = (int) Math.floor(Math.random() * 24);
         Letra auxiliar = letras.get(indice);
 
-        if (!auxiliar.isEstado()) {
-
+        while (!auxiliar.isEstado()) {
             auxiliar.setEstado(true);
-            auxiliar.setPosY(-100);
-
+            auxiliar.setPosY(-50);
             control.dibujarLetra(auxiliar);
             auxiliar.setText(ABC[indice]);
-
-            if (auxiliar.getIdTimer() != -1) {
-                auxiliar.setVisible(true);
-                auxiliar.setEnabled(true);
-                tiemposCaida.get((auxiliar.getIdTimer())).start();
-
-            } else {
-                timerCaer(auxiliar);
-                auxiliar.setVisible(true);
-                auxiliar.setEnabled(true);
-
-            }
             control.refrescar();
 
-        } else {
-            letraAleatoria();
         }
     }
 
-    /**
-     *
-     * @param letra
-     */
+//    public int crearLetraAleatoria() {
+//        int indice = (int) Math.floor(Math.random() * 24);
+//        Letra auxiliar = letras.get(indice);
+//
+//        while (!auxiliar.isEstado()) {
+//            auxiliar.setEstado(true);
+//            control.dibujarLetra(auxiliar);
+//            auxiliar.setText(ABC[indice]);
+//
+//            auxiliar.mover();
+//            if (auxiliar.isEstado() == true) {
+//                break;
+//            }
+//        }
+//        return indice;
+//    }
+    //para eliminar la letra que se pulsa si coincide 
     public void buscarLetra(String letra) {
         letra = letra.toUpperCase();
-
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
+
             if (auxiliar.getText().equals(letra)) {
-
+                System.out.println("el texto del axuliar es: "+auxiliar.getText()+" -- y el de la letra: "+letra);
+                letras.remove(i);  //remove i
                 auxiliar.setVisible(false);
-                auxiliar.setEstado(false);
-                auxiliar.setEnabled(false);
-                auxiliar.setPosY(-100);
-
-                tiemposCaida.get(auxiliar.getIdTimer()).stop();
+                aciertos++;
+                control.dileVistaActualizaCont(aciertos);
             }
+//            else {
+//                //aciertos--;
+//                //System.out.println("no has acertado");
+//                //control.dileVistaActualizaCont(aciertos);
+//            }
         }
-    }
-
-    public void timerCaer(Letra letra) {
-        Timer temporizadorCaer = new Timer(tiempoCaida, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                letra.mover();
-            }
-        });
-        letra.setIdTimer(idTimer);
-        idTimer++;
-        temporizadorCaer.start();
-        tiemposCaida.add(temporizadorCaer);
     }
 
     public void timerCrear() {
         temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                letraAleatoria();
+                //letraAleatoria();
+
+                for (int i = 0; i < letras.size(); i++) {
+                    Letra auxiliar = letras.get(i);
+                    auxiliar.mover();
+                }
+
+                if (contador == 0 || contador == 1000) {
+                    letraAleatoria();
+                }
+                contador += 50;
+
+                if (contador == 1000) {
+                    contador = 0;
+                }
+
+                //control.refrescar();
             }
         });
         temporizadorCrear.start();
     }
 
-    public int getTiempoCaida() {
-        return tiempoCaida;
-    }
-
-    public void pararCaida() {
-        for (int i = 0; i < tiemposCaida.size(); i++) {
-            tiemposCaida.get(i).stop();
-        }
-    }
-
     public void fin() {
-        pararCaida();
         temporizadorCrear.stop();
         control.fin();
     }
 
+    public void establecerNiveles() {
+
+    }
+
+    //
 }

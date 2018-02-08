@@ -1,8 +1,10 @@
 /**/
 package lluviadeletras;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,6 +23,7 @@ public class Vista extends JFrame {
     private Controlador control;
     private JMenuBar mbMenu;
     private ArrayList<JMenuItem> niveles;
+    private JLabel etiquetaPuntos, nivelActual;
 
     public Vista(Controlador control) {
         this.control = control;
@@ -33,6 +36,7 @@ public class Vista extends JFrame {
         this.setSize(ANCHO, ALTO);
         this.setResizable(false);
         crearMenu();
+        crearEtiquetaPuntosNivel();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -75,6 +79,18 @@ public class Vista extends JFrame {
         }
     }
 
+    public void crearEtiquetaPuntosNivel() {
+        etiquetaPuntos = new JLabel("PUNTOS: ");
+        this.add(etiquetaPuntos);
+        etiquetaPuntos.setBounds(50, 470, 250, 40);
+        etiquetaPuntos.setFont(new Font("Calibri", 3, 25));
+
+        nivelActual = new JLabel("NIVEL 1");
+        this.add(nivelActual);
+        nivelActual.setBounds(470, 70, 250, 40);
+        nivelActual.setFont(new Font("Calibri", 3, 25));
+    }
+
     public void dibujarBandeja(Bandeja bandeja) {
         this.add(bandeja);
         refrescar();
@@ -99,6 +115,10 @@ public class Vista extends JFrame {
 
     public static int getANCHO() {
         return ANCHO;
+    }
+
+    public void actualizaContador(int contador) {
+        etiquetaPuntos.setText("PUNTOS: "+contador);
     }
 
 }
