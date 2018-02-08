@@ -131,6 +131,7 @@ public class Vista extends JFrame {
             nivel++;
         }
         nivelActual.setText("Nivel: " + nivel);
+        
     }
 
 }
