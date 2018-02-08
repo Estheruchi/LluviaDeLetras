@@ -2,8 +2,11 @@
 package lluviadeletras;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -99,6 +102,13 @@ public class Vista extends JFrame {
     public void dibujarBandeja(Bandeja bandeja) {
         this.add(bandeja);
         refrescar();
+    }
+    
+    public void paint(Graphics grafico){
+        Dimension height=getSize();
+        ImageIcon img=new ImageIcon(getClass().getResource("../Imagenes/fondo.png"));
+        grafico.drawImage(img.getImage(), 0, 0, height.width,height.height,null);
+        super.paint(grafico);
     }
 
     public void dibujarLetra(Letra letra) {
