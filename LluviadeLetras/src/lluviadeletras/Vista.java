@@ -29,12 +29,15 @@ public class Vista extends JFrame {
     private ArrayList<JMenuItem> niveles;
     private JLabel etiquetaPuntos, nivelActual;
     private int nivel = 1;
+    private FondoImagen fondo;
 
     public Vista(Controlador control) {
         this.control = control;
         this.addKeyListener(control);
         //this.getContentPane().setBackground(Color.getHSBColor(100, 180, 171));
+        crearFondo();
         crearInterfaz();
+        
     }
 
     public void crearInterfaz() {
@@ -46,6 +49,15 @@ public class Vista extends JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    
+    public void crearFondo() {
+        // CREAMOS EL FONDO
+        fondo = new FondoImagen();
+        this.add(fondo);
+        fondo.setBounds(0, 0, 600, 600);
+
+    }
+    
 
     public void crearMenu() {
         mbMenu = new JMenuBar();
@@ -103,13 +115,6 @@ public class Vista extends JFrame {
         this.add(bandeja);
         refrescar();
     }
-    
-    public void paint(Graphics grafico){
-        Dimension height=getSize();
-        ImageIcon img=new ImageIcon(getClass().getResource("../Imagenes/fondo.png"));
-        grafico.drawImage(img.getImage(), 0, 0, height.width,height.height,null);
-        super.paint(grafico);
-    }
 
     public void dibujarLetra(Letra letra) {
         this.add(letra);
@@ -137,11 +142,11 @@ public class Vista extends JFrame {
     }
 
     public void actualizaNivel() {
-        if(nivel<5){
+        if (nivel < 5) {
             nivel++;
         }
         nivelActual.setText("Nivel: " + nivel);
-        
+
     }
 
 }
