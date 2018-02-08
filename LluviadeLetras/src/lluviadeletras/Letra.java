@@ -46,6 +46,11 @@ public class Letra extends JButton {
         dibujarPanel();
 
     }
+    
+    public void aumentarVelocidad(){
+        VELOCIDAD+=3;
+        System.out.println(VELOCIDAD);
+    }
 
     public void cambiarDireccion() {
         if (direccion == BAJANDO) {
@@ -100,6 +105,10 @@ public class Letra extends JButton {
         }
 
         this.setLocation(posX, posY);
+    }
+    
+        public void setVELOCIDAD(int VELOCIDAD) {
+        Letra.VELOCIDAD = VELOCIDAD;
     }
 
 }

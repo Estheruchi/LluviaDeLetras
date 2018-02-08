@@ -24,6 +24,7 @@ public class Vista extends JFrame {
     private JMenuBar mbMenu;
     private ArrayList<JMenuItem> niveles;
     private JLabel etiquetaPuntos, nivelActual;
+    private int nivel = 1;
 
     public Vista(Controlador control) {
         this.control = control;
@@ -85,7 +86,7 @@ public class Vista extends JFrame {
         etiquetaPuntos.setBounds(50, 470, 250, 40);
         etiquetaPuntos.setFont(new Font("Calibri", 3, 25));
 
-        nivelActual = new JLabel("NIVEL 1");
+        nivelActual = new JLabel("NIVEL "+nivel);
         this.add(nivelActual);
         nivelActual.setBounds(470, 70, 250, 40);
         nivelActual.setFont(new Font("Calibri", 3, 25));
@@ -119,6 +120,10 @@ public class Vista extends JFrame {
 
     public void actualizaContador(int contador) {
         etiquetaPuntos.setText("PUNTOS: "+contador);
+    }
+    public void actualizaNivel() {
+        nivel++;
+        nivelActual.setText("Nivel: "+nivel);
     }
 
 }

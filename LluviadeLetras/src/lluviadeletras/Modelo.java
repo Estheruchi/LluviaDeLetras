@@ -46,6 +46,18 @@ public class Modelo {
         timerCrear();
 
     }
+    
+        public void aumentarNivel(){
+        for (int i = 0; i < letras.size(); i++) {
+            letras.get(i).aumentarVelocidad();
+        }       
+    }
+    
+    public void restablecerVelocidad(){
+        for (int i = 0; i < letras.size(); i++) {
+            letras.get(i).setVELOCIDAD(5);
+        }
+    }
 
     /**
      * Dibujamos la bandeja.

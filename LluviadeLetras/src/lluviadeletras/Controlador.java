@@ -17,6 +17,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     private Modelo modelo;
     private Vista vista;
+    private VistaFin vfin;
 
     public Controlador() {
         vista = new Vista(this);
@@ -65,6 +66,8 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
             case "REINTENTAR":
                 vista.dispose();
                 new Controlador();
+                vfin.dispose();
+                modelo.restablecerVelocidad();
                 break;
             default:
                 System.out.println(e.getActionCommand());
@@ -94,7 +97,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     public void fin() {
         vista.dispose();
-        VistaFin vfin = new VistaFin(this);
+        vfin = new VistaFin(this);
     }
 
     public void refrescar() {
@@ -103,5 +106,23 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     public void dileVistaActualizaCont(int contador) {
         vista.actualizaContador(contador);
+        switch (contador) {
+            case 10:
+                vista.actualizaNivel();
+                modelo.aumentarNivel();
+                break;
+            case 20:
+                vista.actualizaNivel();
+                modelo.aumentarNivel();
+                break;
+            case 30:
+                vista.actualizaNivel();
+                modelo.aumentarNivel();
+                break;
+            case 40:
+                vista.actualizaNivel();
+                modelo.aumentarNivel();
+                break;
+        }
     }
 }
