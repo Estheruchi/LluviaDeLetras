@@ -6,6 +6,7 @@
 package lluviadeletras;
 
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -77,8 +78,8 @@ public class Letra extends JButton {
         int g = (int) Math.round(Math.random() * 255);
         int b = (int) Math.round(Math.random() * 255);
         color = new Color(r, g, b);
-        this.setBackground(color);
-        this.setOpaque(true);
+        this.setBackground(Color.black);
+        this.setOpaque(false);
     }
 
     public void generarPosicion() {
@@ -87,6 +88,8 @@ public class Letra extends JButton {
 
     public void dibujarPanel() {
         this.setBounds(posX, posY, ALTO, ANCHO);
+        this.setFont(new Font("Arial",1,20));
+        this.setForeground(Color.CYAN);
     }
 
     public void mover() {
