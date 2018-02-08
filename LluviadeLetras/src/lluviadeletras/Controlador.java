@@ -109,22 +109,22 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         switch (contador) {
             case 10:
                 vista.actualizaNivel();
-                modelo.aumentarNivel();
+                modelo.cambiarNivel("NIVEL 2");
                 break;
             case 20:
                 vista.actualizaNivel();
-                modelo.aumentarNivel();
+                modelo.cambiarNivel("NIVEL 3");
                 break;
             case 30:
                 vista.actualizaNivel();
-                modelo.aumentarNivel();
+                modelo.cambiarNivel("NIVEL 4");
                 break;
             case 40:
                 vista.actualizaNivel();
-                modelo.aumentarNivel();
+                modelo.cambiarNivel("NIVEL 5");
                 break;
         }
     }
-    
+
     ///niveles
 }

@@ -35,6 +35,7 @@ public class Modelo {
     private int contador = 0;
     private int aciertos;
     private boolean primeraLetra = false;
+    private int tiempoCrear;
 
     public Modelo(Controlador control) {
         this.control = control;
@@ -46,14 +47,35 @@ public class Modelo {
         timerCrear();
 
     }
-    
-        public void aumentarNivel(){
-        for (int i = 0; i < letras.size(); i++) {
+
+    public void cambiarNivel(String lvl) {
+        /*for (int i = 0; i < letras.size(); i++) {
             letras.get(i).aumentarVelocidad();
-        }       
+        }*/
+        switch (lvl) {
+            case "NIVEL 1":
+
+                velocidadLetras = 5;
+                numLetras = 5;
+                tiempoCrear = 100;
+                break;
+
+            case "NIVEL 2":
+
+                break;
+            case "NIVEL 3":
+
+                break;
+            case "NIVEL 4":
+
+                break;
+            case "NIVEL 5":
+
+                break;
+        }
     }
-    
-    public void restablecerVelocidad(){
+
+    public void restablecerVelocidad() {
         for (int i = 0; i < letras.size(); i++) {
             letras.get(i).setVELOCIDAD(5);
         }
@@ -169,12 +191,12 @@ public class Modelo {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (contador == 0 || contador == 1000) {
+                if (contador == 0 || contador == tiempoCrear) {
                     letraAleatoria();
                 }
                 contador += 50;
 
-                if (contador == 1000) {
+                if (contador == tiempoCrear) {
                     contador = 0;
                 }
                 for (int i = 0; i < letras.size(); i++) {
@@ -200,10 +222,6 @@ public class Modelo {
                 letras.get(i).cambiarDireccion();
             }
         }
-
-    }
-
-    public void establecerNiveles() {
 
     }
 
