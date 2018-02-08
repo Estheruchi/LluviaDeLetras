@@ -23,7 +23,7 @@ public class Modelo {
         "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
         "U", "V", "W", "X", "Y", "Z"};
 
-    private int tiempoCreacion = 100;
+    private int tiempoCreacion = 50;
 
     private Controlador control;
     private Bandeja bandeja;
@@ -89,9 +89,6 @@ public class Modelo {
      */
     public void crearLetras() {
         letras = new ArrayList();
-        for (int i = 0; i < NUM_LETRAS; i++) {
-            letras.add(new Letra(this, ABC[i]));
-        }
     }
 
     /**
@@ -106,34 +103,26 @@ public class Modelo {
      */
     public void letraAleatoria() {
         int indice = (int) Math.floor(Math.random() * 24);
-        Letra auxiliar = letras.get(indice);
+        //Letra auxiliar = letras.get(indice);
+        letras.add(new Letra(this, ABC[indice]));
+        letras.get(letras.size() - 1).setVisible(true);
+        letras.get(letras.size() - 1).setText(ABC[indice]);
+        control.dibujarLetra(letras.get(letras.size() - 1));
 
-        while (!auxiliar.isEstado()) {
-            auxiliar.setEstado(true);
-            auxiliar.setPosY(-50);
-            control.dibujarLetra(auxiliar);
-            auxiliar.setText(ABC[indice]);
-            control.refrescar();
-
-        }
-    }
-
-//    public int crearLetraAleatoria() {
-//        int indice = (int) Math.floor(Math.random() * 24);
-//        Letra auxiliar = letras.get(indice);
-//
 //        while (!auxiliar.isEstado()) {
 //            auxiliar.setEstado(true);
+//            auxiliar.setPosY(-50);
 //            control.dibujarLetra(auxiliar);
 //            auxiliar.setText(ABC[indice]);
+//            control.refrescar();
 //
-//            auxiliar.mover();
-//            if (auxiliar.isEstado() == true) {
-//                break;
-//            }
 //        }
-//        return indice;
-//    }
+    }
+
+    public void generarNuevaLetra() {
+
+    }
+
     //para eliminar la letra que se pulsa si coincide 
     public void buscarLetra(String letra) {
         letra = letra.toUpperCase();
@@ -141,7 +130,6 @@ public class Modelo {
             Letra auxiliar = letras.get(i);
 
             if (auxiliar.getText().equals(letra)) {
-                System.out.println("el texto del axuliar es: "+auxiliar.getText()+" -- y el de la letra: "+letra);
                 letras.remove(i);  //remove i
                 auxiliar.setVisible(false);
                 aciertos++;
@@ -161,11 +149,6 @@ public class Modelo {
             public void actionPerformed(ActionEvent e) {
                 //letraAleatoria();
 
-                for (int i = 0; i < letras.size(); i++) {
-                    Letra auxiliar = letras.get(i);
-                    auxiliar.mover();
-                }
-
                 if (contador == 0 || contador == 1000) {
                     letraAleatoria();
                 }
@@ -174,8 +157,10 @@ public class Modelo {
                 if (contador == 1000) {
                     contador = 0;
                 }
-
-                //control.refrescar();
+                for (int i = 0; i < letras.size(); i++) {
+                    Letra auxiliar = letras.get(i);
+                    auxiliar.mover();
+                }
             }
         });
         temporizadorCrear.start();
