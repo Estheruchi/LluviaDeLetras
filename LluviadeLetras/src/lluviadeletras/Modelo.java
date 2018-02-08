@@ -111,12 +111,14 @@ public class Modelo {
             control.dibujarLetra(letras.get(letras.size() - 1));
             primeraLetra = true;
         } else {
+
             for (int i = 0; i < letras.size(); i++) {
-                if (letras.get(i).equals(ABC[indice])) {
+                if (letras.get(i).getText().equals(ABC[indice])) {
                     indice = generarNuevaLetra();
                     i = 0;
                 }
             }
+
             letras.add(new Letra(this, ABC[indice]));
             letras.get(letras.size() - 1).setText(ABC[indice]);
             letras.get(letras.size() - 1).setVisible(true);
