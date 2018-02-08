@@ -24,7 +24,6 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     }
 
     public void mouseClicked(MouseEvent me) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -62,6 +61,10 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
             //modelo.cargarPartida();
             case "Salir":
                 //vista.salirApp();
+                break;
+            case "REINTENTAR":
+                vista.dispose();
+                new Controlador();
                 break;
             default:
                 System.out.println(e.getActionCommand());

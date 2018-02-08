@@ -33,6 +33,7 @@ public class VistaFin extends JFrame {
         this.add(titulo);
         titulo.setBounds(100, 100, 100, 50);
         JButton reintentar = new JButton("REINTENTAR");
+        reintentar.addActionListener(control);
         reintentar.setBounds(200, 200, 150, 50);
         this.add(reintentar);
 
