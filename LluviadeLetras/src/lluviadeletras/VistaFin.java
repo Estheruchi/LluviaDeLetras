@@ -5,6 +5,8 @@
  */
 package lluviadeletras;
 
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,19 +28,27 @@ public class VistaFin extends JFrame {
         crearInterfaz();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+        this.getContentPane().setBackground(Color.black);
     }
 
     public void crearInterfaz() {
         JLabel titulo = new JLabel("GAME OVER");
         this.add(titulo);
-        titulo.setBounds(100, 100, 100, 50);
+        
+        
+        CustomLetra cl = new CustomLetra();
+        titulo.setBounds(40, 60, 600, 300);
+        titulo.setFont(cl.MyFont(1,60f));
+        titulo.setForeground(Color.red);
+        
         JButton reintentar = new JButton("REINTENTAR");
         reintentar.addActionListener(control);
-        reintentar.setBounds(200, 200, 150, 50);
+        reintentar.setBounds(200, 300, 150, 50);
         this.add(reintentar);
 
         this.setLayout(null);
         this.setSize(ANCHO, ALTO);
         this.setResizable(false);
     }
+
 }

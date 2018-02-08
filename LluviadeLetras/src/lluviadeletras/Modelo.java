@@ -35,7 +35,7 @@ public class Modelo {
     private int contador = 0;
     private int aciertos;
     private boolean primeraLetra = false;
-    private int tiempoCrear;
+    private int tiempoCrear=1000;
 
     public Modelo(Controlador control) {
         this.control = control;
@@ -55,9 +55,9 @@ public class Modelo {
         switch (lvl) {
             case "NIVEL 1":
 
-                velocidadLetras = 5;
-                numLetras = 5;
-                tiempoCrear = 100;
+                //velocidadLetras = 5;
+                //numLetras = 5;
+                //tiempoCrear = 100;
                 break;
 
             case "NIVEL 2":
@@ -152,7 +152,6 @@ public class Modelo {
                     i = 0;
                 }
             }
-
             letras.add(new Letra(this, ABC[indice]));
             letras.get(letras.size() - 1).setText(ABC[indice]);
             letras.get(letras.size() - 1).setVisible(true);
@@ -168,22 +167,30 @@ public class Modelo {
 
     //para eliminar la letra que se pulsa si coincide
     public void buscarLetra(String letra) {
+        boolean bandera=true;
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
-
+            
             if (auxiliar.getText().equals(letra)) {
                 letras.remove(i);
                 auxiliar.setVisible(false);
                 aciertos++;
                 control.dileVistaActualizaCont(aciertos);
+                bandera=false;
             }
-//            else {
-//                //aciertos--;
-//                //System.out.println("no has acertado");
-//                //control.dileVistaActualizaCont(aciertos);
-//            }
+            
         }
+        if(bandera){
+            
+            aciertos--;
+            comprobarAciertos();
+            control.dileVistaActualizaCont(aciertos);
+            
+        }
+        
+        
+        
     }
 
     public void timerCrear() {
@@ -217,12 +224,22 @@ public class Modelo {
     public void comprobarChoque() {
         for (int i = 0; i < letras.size(); i++) {
 
-            if (bandeja.getY() == letras.get(i).getY() && bandeja.getX() == letras.get(i).getX()) {
-
+            //if (bandeja.getY() == letras.get(i).getY() && bandeja.getX() == letras.get(i).getX()) {
+            if (letras.get(i).getY() >= 360
+                    && letras.get(i).getX() > bandeja.getX() - 95
+                    && letras.get(i).getX() < bandeja.getX() + 95
+                    && letras.get(i).getDireccion() == 0) {
                 letras.get(i).cambiarDireccion();
             }
         }
 
+    }
+    
+    
+    public void comprobarAciertos(){
+        if(aciertos<0){
+            fin();
+        }
     }
 
 }

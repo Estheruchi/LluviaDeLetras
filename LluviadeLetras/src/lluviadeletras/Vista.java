@@ -1,6 +1,7 @@
 /**/
 package lluviadeletras;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -29,6 +30,7 @@ public class Vista extends JFrame {
     public Vista(Controlador control) {
         this.control = control;
         this.addKeyListener(control);
+        //this.getContentPane().setBackground(Color.getHSBColor(100, 180, 171));
         crearInterfaz();
     }
 
@@ -81,15 +83,17 @@ public class Vista extends JFrame {
     }
 
     public void crearEtiquetaPuntosNivel() {
+        CustomLetra cl = new CustomLetra();
+
         etiquetaPuntos = new JLabel("PUNTOS: ");
         this.add(etiquetaPuntos);
-        etiquetaPuntos.setBounds(50, 470, 250, 40);
-        etiquetaPuntos.setFont(new Font("Calibri", 3, 25));
+        etiquetaPuntos.setBounds(50, 470, 300, 40);
+        etiquetaPuntos.setFont(cl.MyFont(1, 31f));
 
-        nivelActual = new JLabel("NIVEL "+nivel);
+        nivelActual = new JLabel("NIVEL " + nivel);
         this.add(nivelActual);
-        nivelActual.setBounds(470, 70, 250, 40);
-        nivelActual.setFont(new Font("Calibri", 3, 25));
+        nivelActual.setBounds(410, 70, 300, 40);
+        nivelActual.setFont(cl.MyFont(1, 31f));
     }
 
     public void dibujarBandeja(Bandeja bandeja) {
@@ -119,11 +123,12 @@ public class Vista extends JFrame {
     }
 
     public void actualizaContador(int contador) {
-        etiquetaPuntos.setText("PUNTOS: "+contador);
+        etiquetaPuntos.setText("PUNTOS: " + contador);
     }
+
     public void actualizaNivel() {
         nivel++;
-        nivelActual.setText("Nivel: "+nivel);
+        nivelActual.setText("Nivel: " + nivel);
     }
 
 }

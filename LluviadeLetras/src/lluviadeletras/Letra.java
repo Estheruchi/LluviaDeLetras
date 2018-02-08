@@ -46,9 +46,9 @@ public class Letra extends JButton {
         dibujarPanel();
 
     }
-    
-    public void aumentarVelocidad(){
-        VELOCIDAD+=3;
+
+    public void aumentarVelocidad() {
+        VELOCIDAD += 3;
         System.out.println(VELOCIDAD);
     }
 
@@ -106,9 +106,13 @@ public class Letra extends JButton {
 
         this.setLocation(posX, posY);
     }
-    
-        public void setVELOCIDAD(int VELOCIDAD) {
+
+    public void setVELOCIDAD(int VELOCIDAD) {
         Letra.VELOCIDAD = VELOCIDAD;
+    }
+
+    public int getDireccion() {
+        return direccion;
     }
 
 }
