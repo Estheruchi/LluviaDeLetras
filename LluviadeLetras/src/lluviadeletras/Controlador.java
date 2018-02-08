@@ -125,4 +125,6 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
         }
     }
+    
+    ///niveles
 }
