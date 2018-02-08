@@ -19,13 +19,15 @@ public class Letra extends JButton {
     private static final int ALTO = 50;
     private static final int ANCHO = 50;
     private static int VELOCIDAD = 5;
+    private static int SUBIENDO = 1;
+    private static int BAJANDO = 0;
 
     /*VARIABLES DE CADA PANEL*/
     private Modelo modelo;
     private Color color;
     private String letra;
     private boolean estado; //si ha salido o no
-    //private int direccion; 
+    private int direccion;
 
 
     /*TRUE: CAYENDO FALSE: OCULTO*/
@@ -37,11 +39,20 @@ public class Letra extends JButton {
         this.modelo = modelo;
         this.letra = letra;
         this.estado = false;
+        this.direccion = BAJANDO;
 
         generarColor();
         generarPosicion();
         dibujarPanel();
 
+    }
+
+    public void cambiarDireccion() {
+        if (direccion == BAJANDO) {
+            direccion = SUBIENDO;
+        } else {
+            direccion = BAJANDO;
+        }
     }
 
     public void setEstado(boolean estado) {
@@ -74,17 +85,21 @@ public class Letra extends JButton {
     }
 
     public void mover() {
-
-        if (posY >= (modelo.altoVentana() - 100)) {
-            modelo.fin();
-            //posY = -100;
+        if (direccion == BAJANDO) {
+            if (posY >= (modelo.altoVentana() - 100)) {
+                modelo.fin();
+            } else {
+                posY += VELOCIDAD;
+            }
         } else {
-            posY += VELOCIDAD;
+            if (posY <= 0) {
+                modelo.fin();
+            } else {
+                posY -= VELOCIDAD;
+            }
         }
 
         this.setLocation(posX, posY);
     }
-    
-    
 
 }
