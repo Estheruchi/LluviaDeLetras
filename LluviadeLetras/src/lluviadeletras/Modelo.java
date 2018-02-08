@@ -34,6 +34,7 @@ public class Modelo {
     private int puntuacion;
     private int contador = 0;
     private int aciertos;
+    private boolean primeraLetra = false;
 
     public Modelo(Controlador control) {
         this.control = control;
@@ -102,35 +103,41 @@ public class Modelo {
      * //
      */
     public void letraAleatoria() {
+        int indice = generarNuevaLetra();
+        if (!primeraLetra) {
+            letras.add(new Letra(this, ABC[indice]));
+            letras.get(letras.size() - 1).setText(ABC[indice]);
+            letras.get(letras.size() - 1).setVisible(true);
+            control.dibujarLetra(letras.get(letras.size() - 1));
+            primeraLetra = true;
+        } else {
+            for (int i = 0; i < letras.size(); i++) {
+                if (letras.get(i).equals(ABC[indice])) {
+                    indice = generarNuevaLetra();
+                    i = 0;
+                }
+            }
+            letras.add(new Letra(this, ABC[indice]));
+            letras.get(letras.size() - 1).setText(ABC[indice]);
+            letras.get(letras.size() - 1).setVisible(true);
+            control.dibujarLetra(letras.get(letras.size() - 1));
+        }
+
+    }
+
+    public int generarNuevaLetra() {
         int indice = (int) Math.floor(Math.random() * 24);
-        //Letra auxiliar = letras.get(indice);
-        letras.add(new Letra(this, ABC[indice]));
-        letras.get(letras.size() - 1).setVisible(true);
-        letras.get(letras.size() - 1).setText(ABC[indice]);
-        control.dibujarLetra(letras.get(letras.size() - 1));
-
-//        while (!auxiliar.isEstado()) {
-//            auxiliar.setEstado(true);
-//            auxiliar.setPosY(-50);
-//            control.dibujarLetra(auxiliar);
-//            auxiliar.setText(ABC[indice]);
-//            control.refrescar();
-//
-//        }
+        return indice;
     }
 
-    public void generarNuevaLetra() {
-
-    }
-
-    //para eliminar la letra que se pulsa si coincide 
+    //para eliminar la letra que se pulsa si coincide
     public void buscarLetra(String letra) {
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
 
             if (auxiliar.getText().equals(letra)) {
-                letras.remove(i);  //remove i
+                letras.remove(i);
                 auxiliar.setVisible(false);
                 aciertos++;
                 control.dileVistaActualizaCont(aciertos);
