@@ -156,7 +156,6 @@ public class Modelo {
         temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //letraAleatoria();
 
                 if (contador == 0 || contador == 1000) {
                     letraAleatoria();
@@ -168,6 +167,7 @@ public class Modelo {
                 }
                 for (int i = 0; i < letras.size(); i++) {
                     Letra auxiliar = letras.get(i);
+                    comprobarChoque();
                     auxiliar.mover();
                 }
             }
@@ -180,9 +180,19 @@ public class Modelo {
         control.fin();
     }
 
+    public void comprobarChoque() {
+        for (int i = 0; i < letras.size(); i++) {
+
+            if (bandeja.getY() == letras.get(i).getY() && bandeja.getX() == letras.get(i).getX()) {
+
+                letras.get(i).cambiarDireccion();
+            }
+        }
+
+    }
+
     public void establecerNiveles() {
 
     }
 
-    //
 }

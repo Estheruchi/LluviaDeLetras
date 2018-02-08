@@ -53,4 +53,13 @@ public class Bandeja extends JLabel {
         }
         this.setLocation(posicionX, POSICION_Y);
     }
+
+    public int getPOSICION_Y() {
+        return POSICION_Y;
+    }
+
+    public int getPosicionX() {
+        return posicionX;
+    }
+
 }
