@@ -59,20 +59,20 @@ public class Modelo {
                 tiempo = 1000;
                 break;
             case "NIVEL 2":
-                velocidadLetras = 9;
-                tiempo = 700;
+                velocidadLetras = 10;
+                tiempo = 900;
                 break;
             case "NIVEL 3":
                 velocidadLetras = 13;
-                tiempo = 500;
+                tiempo = 800;
                 break;
             case "NIVEL 4":
-                velocidadLetras = 17;
-                tiempo = 250;
+                velocidadLetras = 15;
+                tiempo = 700;
                 break;
             case "NIVEL 5":
-                velocidadLetras = 21;
-                tiempo = 100;
+                velocidadLetras = 19;
+                tiempo = 550;
                 break;
         }
         for (int i = 0; i < letras.size(); i++) {

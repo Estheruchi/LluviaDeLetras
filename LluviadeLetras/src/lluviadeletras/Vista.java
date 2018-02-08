@@ -54,6 +54,7 @@ public class Vista extends JFrame {
         // CREAMOS EL FONDO
         fondo = new FondoImagen();
         this.add(fondo);
+        fondo.setLayout(null);
         fondo.setBounds(0, 0, 600, 600);
 
     }
@@ -101,23 +102,25 @@ public class Vista extends JFrame {
         CustomLetra cl = new CustomLetra();
 
         etiquetaPuntos = new JLabel("PUNTOS: ");
-        this.add(etiquetaPuntos);
+        fondo.add(etiquetaPuntos);
         etiquetaPuntos.setBounds(50, 470, 300, 40);
         etiquetaPuntos.setFont(cl.MyFont(1, 31f));
+        etiquetaPuntos.setForeground(Color.WHITE);
 
         nivelActual = new JLabel("NIVEL " + nivel);
-        this.add(nivelActual);
+        fondo.add(nivelActual);
         nivelActual.setBounds(410, 70, 300, 40);
         nivelActual.setFont(cl.MyFont(1, 31f));
+        nivelActual.setForeground(Color.WHITE);
     }
 
     public void dibujarBandeja(Bandeja bandeja) {
-        this.add(bandeja);
+        fondo.add(bandeja);
         refrescar();
     }
 
     public void dibujarLetra(Letra letra) {
-        this.add(letra);
+        fondo.add(letra);
         refrescar();
     }
 
@@ -126,7 +129,7 @@ public class Vista extends JFrame {
     }
 
     public void refrescar() {
-        this.repaint();
+        fondo.repaint();
     }
 
     public static int getALTO() {
