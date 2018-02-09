@@ -24,7 +24,7 @@ public class Vista extends JFrame {
     /*CONSTANTES*/
     private static final int ALTO = 600;
     private static final int ANCHO = 600;
-    private static final int NUM_NIVELES = 5;
+    private static final int NUM_NIVELES = 6;
 
     private Controlador control;
     private JMenuBar mbMenu;
@@ -92,8 +92,8 @@ public class Vista extends JFrame {
         niveles = new ArrayList();
         mbMenu.add(mNivel);
 
-        for (int i = 0; i < NUM_NIVELES; i++) {
-            JMenuItem miLvl = new JMenuItem("Nivel " + (i + 1));
+        for (int i =1; i < NUM_NIVELES; i++) {
+            JMenuItem miLvl = new JMenuItem("Nivel " + i);
             miLvl.addActionListener(control);
             niveles.add(miLvl);
             mNivel.add(miLvl);
