@@ -1,4 +1,6 @@
-/**/
+/*
+    Clase que inicia el juego.
+ */
 package lluviadeletras;
 
 /**

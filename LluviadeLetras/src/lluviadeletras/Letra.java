@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+  Clase Letra: Es una clase de tipo botón que se gestiona a sí misma.
  */
 package lluviadeletras;
 
@@ -23,15 +21,11 @@ public class Letra extends JButton {
     private static int SUBIENDO = 1;
     private static int BAJANDO = 0;
 
-    /*VARIABLES DE CADA PANEL*/
+    /*VARIABLES DE CADA BOTÓN*/
     private Modelo modelo;
     private Color color;
     private String letra;
-    private boolean estado; //si ha salido o no
     private int direccion;
-
-
-    /*TRUE: CAYENDO FALSE: OCULTO*/
     private int posX;
     private int posY = - 50;
 
@@ -39,20 +33,17 @@ public class Letra extends JButton {
     public Letra(Modelo modelo, String letra) {
         this.modelo = modelo;
         this.letra = letra;
-        this.estado = false;
         this.direccion = BAJANDO;
+        this.setBackground(Color.black);
+        this.setOpaque(false);
 
-        generarColor();
         generarPosicion();
         dibujarPanel();
-
     }
 
-    public void aumentarVelocidad() {
-        VELOCIDAD += 3;
-        System.out.println(VELOCIDAD);
-    }
-
+    /**
+     * Cambia la direccion de la letra. Sube o cae.
+     */
     public void cambiarDireccion() {
         if (direccion == BAJANDO) {
             direccion = SUBIENDO;
@@ -61,37 +52,34 @@ public class Letra extends JButton {
         }
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    public boolean isEstado() {
-        return estado;
-    }
-
+    /**
+     * Cambia la posicionY (vertical)
+     */
     public void setPosY(int posY) {
         this.posY = posY;
     }
 
-    public void generarColor() {
-        int r = (int) Math.round(Math.random() * 255);
-        int g = (int) Math.round(Math.random() * 255);
-        int b = (int) Math.round(Math.random() * 255);
-        color = new Color(r, g, b);
-        this.setBackground(Color.black);
-        this.setOpaque(false);
-    }
-
+    /**
+     * Genera una posicionX (horizontal) de manera alearoría para que todas las
+     * letras tengan una posicion diferente.
+     */
     public void generarPosicion() {
         this.posX = (int) Math.floor(Math.random() * (500 - 50 + 1) + 50);
     }
 
+    /**
+     * Establece posicion, tamaño, fuente y color de la letra.
+     */
     public void dibujarPanel() {
         this.setBounds(posX, posY, ALTO, ANCHO);
-        this.setFont(new Font("Arial",1,25));
+        this.setFont(new Font("Arial", 1, 18));
         this.setForeground(Color.RED);
     }
 
+    /**
+     * Controla el movimiento de la letra en funcion de la direccion y los
+     * límites de la ventana.
+     */
     public void mover() {
         if (direccion == BAJANDO) {
             if (posY >= (modelo.altoVentana() - 100)) {
@@ -106,14 +94,22 @@ public class Letra extends JButton {
                 posY -= VELOCIDAD;
             }
         }
-
         this.setLocation(posX, posY);
     }
 
+    /**
+     * Establece la nueva velocidad (pixeles) de moviemiento de la letra.
+     *
+     * @param VELOCIDAD -> número de píxeles que "saltará" la letra al moverse.
+     */
     public void setVELOCIDAD(int VELOCIDAD) {
         Letra.VELOCIDAD = VELOCIDAD;
     }
 
+    /**
+     *
+     * @return direccion -> Devuelve la direccion actual de la letra.
+     */
     public int getDireccion() {
         return direccion;
     }

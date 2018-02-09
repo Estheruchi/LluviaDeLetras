@@ -1,4 +1,6 @@
-/**/
+/*
+    Clase Vista: clase ventana.
+ */
 package lluviadeletras;
 
 import java.awt.Color;
@@ -30,18 +32,22 @@ public class Vista extends JFrame {
     private JMenuBar mbMenu;
     private ArrayList<JMenuItem> niveles;
     private JLabel etiquetaPuntos, nivelActual;
-    private int nivel = 1;
+    private int nivel;
     private FondoImagen fondo;
 
     public Vista(Controlador control) {
         this.control = control;
         this.addKeyListener(control);
-        //this.getContentPane().setBackground(Color.getHSBColor(100, 180, 171));
+        this.nivel = 1;
+
         crearFondo();
         crearInterfaz();
 
     }
 
+    /**
+     * Crea la interfaz de la ventana. Posicion, tamaño, componentes...
+     */
     public void crearInterfaz() {
         this.setLayout(null);
         this.setSize(ANCHO, ALTO);
@@ -53,8 +59,10 @@ public class Vista extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Añade un fondo para la ventana.
+     */
     public void crearFondo() {
-        // CREAMOS EL FONDO
         fondo = new FondoImagen();
         this.add(fondo);
         fondo.setLayout(null);
@@ -62,6 +70,9 @@ public class Vista extends JFrame {
 
     }
 
+    /**
+     * Creación del menú.
+     */
     public void crearMenu() {
         mbMenu = new JMenuBar();
         this.setJMenuBar(mbMenu);
@@ -69,6 +80,9 @@ public class Vista extends JFrame {
         crearMenuNivel();
     }
 
+    /**
+     * Creación de las opciones del menú
+     */
     public void crearMenuArchivo() {
         JMenu mArchivo = new JMenu("Archivo");
 
@@ -87,24 +101,29 @@ public class Vista extends JFrame {
         mArchivo.add(miSalir);
     }
 
+    /**
+     * Crea las opciones del menú Nivel.
+     */
     public void crearMenuNivel() {
         JMenu mNivel = new JMenu("Nivel");
         niveles = new ArrayList();
         mbMenu.add(mNivel);
 
-        for (int i =1; i < NUM_NIVELES; i++) {
+        for (int i = 1; i < NUM_NIVELES; i++) {
             JMenuItem miLvl = new JMenuItem("Nivel " + i);
             miLvl.addActionListener(control);
             niveles.add(miLvl);
             mNivel.add(miLvl);
-            String letra=""+i;
-            char num=letra.charAt(0);
-            miLvl.setAccelerator(KeyStroke.getKeyStroke(num,KeyEvent.CTRL_MASK));
+            String letra = "" + i;
+            char num = letra.charAt(0);
+            miLvl.setAccelerator(KeyStroke.getKeyStroke(num, KeyEvent.CTRL_MASK));
         }
-        
-      
+
     }
 
+    /**
+     * Crea las etiquetas de la puntuacion y el nivel
+     */
     public void crearEtiquetaPuntosNivel() {
         CustomLetra cl = new CustomLetra();
 
@@ -121,20 +140,29 @@ public class Vista extends JFrame {
         nivelActual.setForeground(Color.WHITE);
     }
 
+    /**
+     * Añade la bandeja recibida a la ventana.
+     *
+     * @param bandeja -> bandeja a pintar
+     */
     public void dibujarBandeja(Bandeja bandeja) {
         fondo.add(bandeja);
         refrescar();
     }
 
+    /**
+     * Añade la letra a la ventana
+     *
+     * @param letra -> Letra a pintar
+     */
     public void dibujarLetra(Letra letra) {
         fondo.add(letra);
         refrescar();
     }
 
-    public void fallo() {
-        //Parpadeo que avisa de fallo 
-    }
-
+    /**
+     * Hace repaint para que se refresque la vista
+     */
     public void refrescar() {
         fondo.repaint();
     }
@@ -152,15 +180,11 @@ public class Vista extends JFrame {
     }
 
     public void actualizaNivel(int valor) {
-          nivelActual.setText("Nivel: " + valor);
+        nivelActual.setText("Nivel: " + valor);
     }
 
     public int getNivel() {
         return nivel;
     }
-    
-    
-    
-    
 
 }

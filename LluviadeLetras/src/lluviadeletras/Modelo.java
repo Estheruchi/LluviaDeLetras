@@ -43,8 +43,8 @@ public class Modelo {
         this.control = control;
         this.bandeja = new Bandeja(this);
         this.puntuacion = 0;
-        this.contPuntuacionSeguidas=0;
-        this.nivelActual=1;
+        this.contPuntuacionSeguidas = 0;
+        this.nivelActual = 1;
         manejarBandeja();
         crearLetras();
         timerCrear();
@@ -56,27 +56,27 @@ public class Modelo {
             case "NIVEL 1":
                 velocidadLetras = 5;
                 tiempo = 1000;
-                nivelActual=1;
+                nivelActual = 1;
                 break;
             case "NIVEL 2":
                 velocidadLetras = 10;
                 tiempo = 900;
-                nivelActual=2;
+                nivelActual = 2;
                 break;
             case "NIVEL 3":
                 velocidadLetras = 13;
                 tiempo = 800;
-                nivelActual=3;
+                nivelActual = 3;
                 break;
             case "NIVEL 4":
                 velocidadLetras = 15;
                 tiempo = 700;
-                nivelActual=4;
+                nivelActual = 4;
                 break;
             case "NIVEL 5":
                 velocidadLetras = 19;
                 tiempo = 550;
-                nivelActual=5;
+                nivelActual = 5;
                 break;
         }
         for (int i = 0; i < letras.size(); i++) {
@@ -136,14 +136,8 @@ public class Modelo {
     }
 
     /**
-     * Genera un numero aleatorio que funcionara como indice. Si la letra
-     * correspondiente a dicho indice no ha caido cae. Si, sin embargo está
-     * cayendo, busca otra.
      *
-     * Si encuentra que no esta cayendo, si es la primera vez crea un timer si
-     * ya habia caido, vuelve a iniciar su timer.
      *
-     * //
      */
     public void letraAleatoria() {
         int indice = generarNuevaLetra();
@@ -174,7 +168,16 @@ public class Modelo {
         return indice;
     }
 
-    //para eliminar la letra que se pulsa si coincide
+    /**
+     * Recibe una letra y la busca en el array de letras actuales en pantalla.
+     * Si la encuentra: La elimina, aumenta la puntuacion, aumenta el contador
+     * de letras acertadas seguidas y comprueba si ha llegado a 10 para subir el
+     * nivel. Actualiza la vista por medio del controlador. La bandera marca si
+     * se ha encontrado o no para así restar puntos, comprobar si se ha llegado
+     * a 0 en la puntuacion y finalizar la partida.
+     *
+     * @param letra -> Letra a buscar.
+     */
     public void buscarLetra(String letra) {
         boolean bandera = true;
         letra = letra.toUpperCase();
@@ -195,21 +198,34 @@ public class Modelo {
         if (bandera) {
 
             puntuacion--;
-            contPuntuacionSeguidas=0;
+            contPuntuacionSeguidas = 0;
             comprobarFin();
             control.dileVistaActualizaCont(puntuacion);
 
         }
     }
 
-    
-    public void comprobarPuntuacion(){
-        if(contPuntuacionSeguidas==10){
-            contPuntuacionSeguidas=0;
-            control.cambiarNiveles(nivelActual+1);
+    /**
+     * Comprueba las letras acertadas seguidas, si llega a 10 aumenta el nivel y
+     * vuelve a iniciarlo a 0.
+     */
+    public void comprobarPuntuacion() {
+        if (contPuntuacionSeguidas == 10) {
+            contPuntuacionSeguidas = 0;
+            control.cambiarNiveles(nivelActual + 1);
         }
     }
-    
+
+    /**
+     * Crea un Timer. El tiempo marca el numero necesario para crear una letra
+     * nueva, el contador aumenta un numero cada vez que se ejecuta el timer. Si
+     * el contador alcanza al tiempo, crea una letra. Cuando el contador supera
+     * o iguala al tiempo se reinicia.
+     *
+     * Cada vez que se ejecuta mueve las letras en pantalla y comprueba su
+     * choque con la bandeja.
+     *
+     */
     public void timerCrear() {
         temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
             @Override
@@ -233,15 +249,20 @@ public class Modelo {
         temporizadorCrear.start();
     }
 
+    /**
+     * Para el timer y finaliza la partida
+     */
     public void fin() {
         temporizadorCrear.stop();
         control.fin();
     }
 
+    /**
+     * Comprueba el choque de las letras con la bandeja
+     */
     public void comprobarChoque() {
         for (int i = 0; i < letras.size(); i++) {
 
-            //if (bandeja.getY() == letras.get(i).getY() && bandeja.getX() == letras.get(i).getX()) {
             if (letras.get(i).getY() >= 360
                     && letras.get(i).getX() > bandeja.getX() - 95
                     && letras.get(i).getX() < bandeja.getX() + 95
@@ -252,6 +273,9 @@ public class Modelo {
 
     }
 
+    /**
+     * Comprueba si la puntuacion ha llegado a 0 y si es asi finaliza.
+     */
     public void comprobarFin() {
         if (puntuacion < 0) {
             fin();
@@ -269,12 +293,5 @@ public class Modelo {
     public int getNivelActual() {
         return nivelActual;
     }
-    
-    
-    
-    
-    
-    
-    
 
 }

@@ -1,3 +1,6 @@
+/**
+ * Clase bandeja: clase de tipo etiqueta.
+ */
 package lluviadeletras;
 
 import java.net.URL;
@@ -31,19 +34,25 @@ public class Bandeja extends JLabel {
         this.setIcon(icon);
     }
 
+    /**
+     * Mueve la bandeja en funcion de la direccion recibida y los limites de la
+     * ventana.
+     *
+     * @param direccion -> 0 derecha - 1 izquierda
+     */
     public void mover(int direccion) {
 
         int ancho = modelo.anchoVentana();
 
         switch (direccion) {
-            case 0: //dcha
+            case 0:
                 if (posicionX + 100 >= ancho) {
                     posicionX = ancho - 100;
                 } else {
                     posicionX += AVANCE;
                 }
                 break;
-            case 1: //izqda
+            case 1:
                 if (posicionX + 100 <= 100) {
                     posicionX = 0;
                 } else {

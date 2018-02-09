@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+    Clase FondoImagen de tipo panel que establece un fondo para la aplicacion 
  */
 package lluviadeletras;
 
@@ -17,11 +15,11 @@ public class FondoImagen extends JPanel {
 
     @Override
     public void paint(Graphics g) {
-        ImageIcon imgFondo =new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
-        g.drawImage(imgFondo.getImage(), 0, 0,600,600, this);
+        ImageIcon imgFondo = new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
+        g.drawImage(imgFondo.getImage(), 0, 0, 600, 600, this);
         setOpaque(false);
         super.paint(g); // para que pinte el resto de los componentes
         super.paintComponent(g);
     }
-     
+
 }

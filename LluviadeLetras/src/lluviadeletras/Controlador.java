@@ -32,6 +32,13 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     }
 
+    /**
+     * Controla moviemiento de bandeja con derecha e izquierda, las teclas que
+     * interfieren en los atajos de teclado para que no resten puntos y si no es
+     * ninguno de estos, sabe que es una letra.
+     *
+     * @param e -> Evento producido
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getExtendedKeyCode()) {

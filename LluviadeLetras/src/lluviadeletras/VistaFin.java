@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+    Clase VistaFin: clase ventana.
  */
 package lluviadeletras;
 
@@ -23,6 +21,7 @@ public class VistaFin extends JFrame {
 
     private Controlador control;
 
+    /*CONSTRUCTOR*/
     public VistaFin(Controlador control) {
         this.control = control;
         crearInterfaz();
@@ -32,16 +31,19 @@ public class VistaFin extends JFrame {
         this.getContentPane().setBackground(Color.black);
     }
 
+    /**
+     * Crea la interfaz que contendrá la ventana. Contiene: Etiqueta de texto y
+     * botón para reiniciar.
+     */
     public void crearInterfaz() {
         JLabel titulo = new JLabel("GAME OVER");
         this.add(titulo);
-        
-        
+
         CustomLetra cl = new CustomLetra();
         titulo.setBounds(40, 60, 600, 300);
-        titulo.setFont(cl.MyFont(1,60f));
+        titulo.setFont(cl.MyFont(1, 60f));
         titulo.setForeground(Color.red);
-        
+
         JButton reintentar = new JButton("REINTENTAR");
         reintentar.addActionListener(control);
         reintentar.setBounds(200, 300, 150, 50);
