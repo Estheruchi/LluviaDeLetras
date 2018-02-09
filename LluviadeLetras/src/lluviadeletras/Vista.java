@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -37,19 +39,20 @@ public class Vista extends JFrame {
         //this.getContentPane().setBackground(Color.getHSBColor(100, 180, 171));
         crearFondo();
         crearInterfaz();
-        
+
     }
 
     public void crearInterfaz() {
         this.setLayout(null);
         this.setSize(ANCHO, ALTO);
         this.setResizable(false);
+        this.setLocation(500, 50);
         crearMenu();
         crearEtiquetaPuntosNivel();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
+
     public void crearFondo() {
         // CREAMOS EL FONDO
         fondo = new FondoImagen();
@@ -58,7 +61,6 @@ public class Vista extends JFrame {
         fondo.setBounds(0, 0, 600, 600);
 
     }
-    
 
     public void crearMenu() {
         mbMenu = new JMenuBar();
@@ -95,7 +97,12 @@ public class Vista extends JFrame {
             miLvl.addActionListener(control);
             niveles.add(miLvl);
             mNivel.add(miLvl);
+            String letra=""+i;
+            char num=letra.charAt(0);
+            miLvl.setAccelerator(KeyStroke.getKeyStroke(num,KeyEvent.CTRL_MASK));
         }
+        
+      
     }
 
     public void crearEtiquetaPuntosNivel() {
@@ -144,11 +151,12 @@ public class Vista extends JFrame {
         etiquetaPuntos.setText("PUNTOS: " + contador);
     }
 
-    public void actualizaNivel() {
-        if (nivel < 5) {
-            nivel++;
-        }
-        nivelActual.setText("Nivel: " + nivel);
+    public void actualizaNivel(int valor) {
+//        if (nivel < 5) {
+//            nivel++;
+//        }
+//        nivelActual.setText("Nivel: " + nivel);
+          nivelActual.setText("Nivel: " + valor);
 
     }
 
