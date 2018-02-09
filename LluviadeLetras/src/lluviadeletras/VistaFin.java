@@ -26,6 +26,7 @@ public class VistaFin extends JFrame {
     public VistaFin(Controlador control) {
         this.control = control;
         crearInterfaz();
+        this.setLocation(400, 50);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
         this.getContentPane().setBackground(Color.black);

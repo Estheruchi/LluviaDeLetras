@@ -46,7 +46,7 @@ public class Vista extends JFrame {
         this.setLayout(null);
         this.setSize(ANCHO, ALTO);
         this.setResizable(false);
-        this.setLocation(500, 50);
+        this.setLocation(400, 50);
         crearMenu();
         crearEtiquetaPuntosNivel();
         this.setVisible(true);

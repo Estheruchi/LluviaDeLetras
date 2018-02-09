@@ -88,7 +88,7 @@ public class Letra extends JButton {
 
     public void dibujarPanel() {
         this.setBounds(posX, posY, ALTO, ANCHO);
-        this.setFont(new Font("Arial",1,20));
+        this.setFont(new Font("Arial",1,25));
         this.setForeground(Color.RED);
     }
 
