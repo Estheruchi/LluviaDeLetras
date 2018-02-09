@@ -31,18 +31,20 @@ public class Modelo {
     private ArrayList<Letra> letras;
 
     private Timer temporizadorCrear;
-    private int puntuacion;
     private int contador = 0;
-    private int aciertos;
+    private int puntuacion;
     private boolean primeraLetra = false;
     private int tiempo = 1000;
     private int velocidadLetras;
+    private int nivelActual;
+    private int contPuntuacionSeguidas;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
         this.puntuacion = 0;
-
+        this.contPuntuacionSeguidas=0;
+        this.nivelActual=1;
         manejarBandeja();
         crearLetras();
         timerCrear();
@@ -50,29 +52,31 @@ public class Modelo {
     }
 
     public void cambiarNivel(String lvl) {
-        /*for (int i = 0; i < letras.size(); i++) {
-            letras.get(i).aumentarVelocidad();
-        }*/
         switch (lvl) {
             case "NIVEL 1":
                 velocidadLetras = 5;
                 tiempo = 1000;
+                nivelActual=1;
                 break;
             case "NIVEL 2":
                 velocidadLetras = 10;
                 tiempo = 900;
+                nivelActual=2;
                 break;
             case "NIVEL 3":
                 velocidadLetras = 13;
                 tiempo = 800;
+                nivelActual=3;
                 break;
             case "NIVEL 4":
                 velocidadLetras = 15;
                 tiempo = 700;
+                nivelActual=4;
                 break;
             case "NIVEL 5":
                 velocidadLetras = 19;
                 tiempo = 550;
+                nivelActual=5;
                 break;
         }
         for (int i = 0; i < letras.size(); i++) {
@@ -180,22 +184,32 @@ public class Modelo {
             if (auxiliar.getText().equals(letra)) {
                 letras.remove(i);
                 auxiliar.setVisible(false);
-                aciertos++;
-                control.dileVistaActualizaCont(aciertos);
+                puntuacion++;
+                contPuntuacionSeguidas++;
+                comprobarPuntuacion();
+                control.dileVistaActualizaCont(puntuacion);
                 bandera = false;
             }
 
         }
         if (bandera) {
 
-            aciertos--;
-            comprobarAciertos();
-            control.dileVistaActualizaCont(aciertos);
+            puntuacion--;
+            contPuntuacionSeguidas=0;
+            comprobarFin();
+            control.dileVistaActualizaCont(puntuacion);
 
         }
-
     }
 
+    
+    public void comprobarPuntuacion(){
+        if(contPuntuacionSeguidas==10){
+            contPuntuacionSeguidas=0;
+            control.cambiarNiveles(nivelActual+1);
+        }
+    }
+    
     public void timerCrear() {
         temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
             @Override
@@ -238,10 +252,29 @@ public class Modelo {
 
     }
 
-    public void comprobarAciertos() {
-        if (aciertos < 0) {
+    public void comprobarFin() {
+        if (puntuacion < 0) {
             fin();
         }
     }
+
+    public int getAciertos() {
+        return puntuacion;
+    }
+
+    public void setAciertos(int puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
+    public int getNivelActual() {
+        return nivelActual;
+    }
+    
+    
+    
+    
+    
+    
+    
 
 }

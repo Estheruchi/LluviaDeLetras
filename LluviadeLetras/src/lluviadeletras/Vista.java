@@ -152,12 +152,15 @@ public class Vista extends JFrame {
     }
 
     public void actualizaNivel(int valor) {
-//        if (nivel < 5) {
-//            nivel++;
-//        }
-//        nivelActual.setText("Nivel: " + nivel);
           nivelActual.setText("Nivel: " + valor);
-
     }
+
+    public int getNivel() {
+        return nivel;
+    }
+    
+    
+    
+    
 
 }

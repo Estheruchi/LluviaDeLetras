@@ -41,40 +41,18 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
             case KeyEvent.VK_RIGHT:
                 modelo.moverDcha();
                 break;
-//
-//            case KeyEvent.VK_A:
-//            case KeyEvent.VK_B:
-//            case KeyEvent.VK_C:
-//            case KeyEvent.VK_D:
-//            case KeyEvent.VK_E:
-//            case KeyEvent.VK_F:
-//            case KeyEvent.VK_G:
-//            case KeyEvent.VK_H:
-//            case KeyEvent.VK_I:
-//            case KeyEvent.VK_J:
-//            case KeyEvent.VK_K:
-//            case KeyEvent.VK_L:
-//            case KeyEvent.VK_M:
-//            case KeyEvent.VK_N:
-//            case KeyEvent.VK_O:
-//            case KeyEvent.VK_P:
-//            case KeyEvent.VK_Q:
-//            case KeyEvent.VK_R:
-//            case KeyEvent.VK_S:
-//            case KeyEvent.VK_T:
-//            case KeyEvent.VK_U:
-//            case KeyEvent.VK_V:
-//            case KeyEvent.VK_W:
-//            case KeyEvent.VK_X:
-//            case KeyEvent.VK_Y:
-//            case KeyEvent.VK_Z:
-//                
-//            break;
-
-            case KeyEvent.CTRL_DOWN_MASK + KeyEvent.VK_4:
-                System.out.println("fdjfksdhfs");
+            case KeyEvent.VK_CONTROL:
                 break;
-
+            case KeyEvent.VK_1:
+                break;
+            case KeyEvent.VK_2:
+                break;
+            case KeyEvent.VK_3:
+                break;
+            case KeyEvent.VK_4:
+                break;
+            case KeyEvent.VK_5:
+                break;
             default:
                 modelo.buscarLetra("" + e.getKeyChar());
         }
@@ -105,18 +83,28 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
             case "Nivel 1":
                 cambiarNivel1();
+                modelo.setAciertos(0);
+                vista.actualizaContador(0);
                 break;
             case "Nivel 2":
                 cambiarNivel2();
+                modelo.setAciertos(0);
+                vista.actualizaContador(0);
                 break;
             case "Nivel 3":
                 cambiarNivel3();
+                modelo.setAciertos(0);
+                vista.actualizaContador(0);
                 break;
             case "Nivel 4":
                 cambiarNivel4();
+                modelo.setAciertos(0);
+                vista.actualizaContador(0);
                 break;
             case "Nivel 5":
                 cambiarNivel5();
+                modelo.setAciertos(0);
+                vista.actualizaContador(0);
                 break;
 
         }
@@ -152,20 +140,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     public void dileVistaActualizaCont(int contador) {
         vista.actualizaContador(contador);
-        switch (contador) {
-            case 10:
-                cambiarNivel2();
-                break;
-            case 20:
-                cambiarNivel3();
-                break;
-            case 30:
-                cambiarNivel4();
-                break;
-            case 40:
-                cambiarNivel5();
-                break;
-        }
+
     }
 
     public void cambiarNivel1() {
@@ -193,5 +168,9 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         modelo.cambiarNivel("NIVEL 5");
     }
 
+    public void cambiarNiveles(int nivel) {
+        vista.actualizaNivel(nivel);
+        modelo.cambiarNivel("NIVEL " + nivel);
+    }
     ///niveles
 }
