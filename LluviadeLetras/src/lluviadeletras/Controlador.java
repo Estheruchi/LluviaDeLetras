@@ -8,6 +8,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,10 +21,14 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     private Modelo modelo;
     private Vista vista;
     private VistaFin vfin;
+    private PartidaCargarGuardar partida;
+    private DatosUsuario data;
 
     public Controlador() {
         vista = new Vista(this);
         modelo = new Modelo(this);
+        partida = new PartidaCargarGuardar();
+        data = new DatosUsuario();
     }
 
     public void mouseClicked(MouseEvent me) {
@@ -74,13 +81,28 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Guardar":
+        {
+            try {
+                partida.guardar(data);
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
-            //modelo.guardarPartida();
+            
             case "Cargar":
+        {
+            try {
+                partida.cargar();
+            } catch (IOException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
                 break;
-            //modelo.cargarPartida();
             case "Salir":
-                //vista.salirApp();
+                this.fin();
                 break;
             case "REINTENTAR":
                 vista.dispose();
