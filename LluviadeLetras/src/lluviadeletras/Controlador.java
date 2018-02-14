@@ -87,7 +87,6 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 reiniciar();
                 break;
             case "Nivel 1":
-                //cambiarNivel1();
                 cambiarNiveles(1);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
