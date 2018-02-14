@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,17 +20,13 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     private Modelo modelo;
     private Vista vista;
     private VistaFin vfin;
-    private PartidaCargarGuardar partida;
-    private DatosUsuario data;
+    private Serializador serializador;
+    private Datos data;
 
     public Controlador() {
         vista = new Vista(this);
         modelo = new Modelo(this);
-        partida = new PartidaCargarGuardar();
-        data = new DatosUsuario();
-    }
-
-    public void mouseClicked(MouseEvent me) {
+        serializador = new Serializador();
     }
 
     @Override
@@ -80,58 +75,62 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Guardar":
-        {
-            try {
-                partida.guardar(data);
-            } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            case "Guardar": {
+                try {
+                    data = new Datos(modelo.getAciertos(), modelo.getNivelActual());
+                    serializador.guardar(data);
+                } catch (IOException ex) {
+                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-                break;
-            
-            case "Cargar":
-        {
-            try {
-                partida.cargar();
-            } catch (IOException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+            break;
+
+            case "Cargar": {
+                try {
+                    data = serializador.cargar();
+                    modelo.setAciertos(data.getPuntos());
+                    vista.actualizaContador(modelo.getAciertos());
+                    modelo.setNivelActual(data.getNivel());
+                    cambiarNiveles(modelo.getNivelActual());
+                    vista.refrescar();
+                } catch (IOException | ClassNotFoundException ex) {
+                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        }
-                break;
+            break;
             case "Salir":
                 this.fin();
                 break;
             case "REINTENTAR":
                 vista.dispose();
                 new Controlador();
+                cambiarNiveles(1);
                 vfin.dispose();
                 modelo.restablecerVelocidad();
                 break;
             case "Nivel 1":
-                cambiarNivel1();
+                //cambiarNivel1();
+                cambiarNiveles(1);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
                 break;
             case "Nivel 2":
-                cambiarNivel2();
+                cambiarNiveles(2);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
                 break;
             case "Nivel 3":
-                cambiarNivel3();
+                cambiarNiveles(3);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
                 break;
             case "Nivel 4":
-                cambiarNivel4();
+                cambiarNiveles(4);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
                 break;
             case "Nivel 5":
-                cambiarNivel5();
+                cambiarNiveles(5);
                 modelo.setAciertos(0);
                 vista.actualizaContador(0);
                 break;
@@ -172,34 +171,9 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
 
     }
 
-    public void cambiarNivel1() {
-        vista.actualizaNivel(1);
-        modelo.cambiarNivel("NIVEL 1");
-    }
-
-    public void cambiarNivel2() {
-        vista.actualizaNivel(2);
-        modelo.cambiarNivel("NIVEL 2");
-    }
-
-    public void cambiarNivel3() {
-        vista.actualizaNivel(3);
-        modelo.cambiarNivel("NIVEL 3");
-    }
-
-    public void cambiarNivel4() {
-        vista.actualizaNivel(4);
-        modelo.cambiarNivel("NIVEL 4");
-    }
-
-    public void cambiarNivel5() {
-        vista.actualizaNivel(5);
-        modelo.cambiarNivel("NIVEL 5");
-    }
-
     public void cambiarNiveles(int nivel) {
         vista.actualizaNivel(nivel);
         modelo.cambiarNivel("NIVEL " + nivel);
     }
-    ///niveles
+
 }

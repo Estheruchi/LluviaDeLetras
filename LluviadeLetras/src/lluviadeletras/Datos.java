@@ -11,16 +11,14 @@ import java.io.Serializable;
  *
  * @author javierflopez
  */
-public class DatosUsuario implements Serializable {
+public class Datos implements Serializable {
 
-    private Modelo modelo;
     int nivel = 0;
     int puntos = 0;
-    
-    public DatosUsuario(){
-        //modelo = new Modelo();
-        //this.nivel = modelo.getnivel();
-        //this.puntos = modelo.getpuntos();
+
+    public Datos(int puntos, int nivel) {
+        this.nivel = nivel;
+        this.puntos = puntos;
     }
 
     public int getNivel() {
@@ -37,12 +35,6 @@ public class DatosUsuario implements Serializable {
 
     public void setPuntos(int puntos) {
         this.puntos = puntos;
-    }
-
-    //es buena idea poner siempre un método toString() para
-    //mostrar todos los datos del objeto.
-    public String toString() {
-        return "Puntos: " + puntos + "\nNivel: " + nivel;
     }
 
 }

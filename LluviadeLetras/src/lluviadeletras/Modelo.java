@@ -290,6 +290,10 @@ public class Modelo {
         this.puntuacion = puntuacion;
     }
 
+    public void setNivelActual(int nivelActual) {
+        this.nivelActual = nivelActual;
+    }
+
     public int getNivelActual() {
         return nivelActual;
     }
