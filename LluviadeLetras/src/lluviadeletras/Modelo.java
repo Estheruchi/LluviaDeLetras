@@ -202,6 +202,7 @@ public class Modelo {
             comprobarFin();
             control.repintarContador(puntuacion);
         }
+        control.cambiaColor(encontrada);
     }
 
     /**

@@ -189,4 +189,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         modelo.cambiarNivel("NIVEL " + nivel);
     }
 
+    public void cambiaColor(Boolean encontrada) {
+        vista.cambiaColor(encontrada);
+    }
 }

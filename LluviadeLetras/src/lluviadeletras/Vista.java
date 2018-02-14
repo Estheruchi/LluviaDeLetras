@@ -187,4 +187,11 @@ public class Vista extends JFrame {
         return nivel;
     }
 
+    public void cambiaColor(Boolean encontrada) {
+        if (!encontrada) {
+            etiquetaPuntos.setForeground(Color.RED);
+        } else {
+            etiquetaPuntos.setForeground(Color.WHITE);
+        }
+    }
 }
