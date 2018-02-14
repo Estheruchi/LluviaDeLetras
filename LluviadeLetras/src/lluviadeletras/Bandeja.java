@@ -26,6 +26,7 @@ public class Bandeja extends JLabel {
         this.posicionX = 250;
         dibujarBandeja();
     }
+    
 
     public void dibujarBandeja() {
         this.setBounds(posicionX, POSICION_Y, 100, 20);
