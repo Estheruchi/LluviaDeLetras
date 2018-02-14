@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,38 +74,17 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "Guardar": {
-                try {
-                    data = new Datos(modelo.getAciertos(), modelo.getNivelActual());
-                    serializador.guardar(data);
-                } catch (IOException ex) {
-                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            break;
-
-            case "Cargar": {
-                try {
-                    data = serializador.cargar();
-                    modelo.setAciertos(data.getPuntos());
-                    vista.actualizaContador(modelo.getAciertos());
-                    modelo.setNivelActual(data.getNivel());
-                    cambiarNiveles(modelo.getNivelActual());
-                    vista.refrescar();
-                } catch (IOException | ClassNotFoundException ex) {
-                    Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            break;
+            case "Guardar":
+                guardarDatos();
+                break;
+            case "Cargar":
+                cargarDatos();
+                break;
             case "Salir":
                 this.fin();
                 break;
             case "REINTENTAR":
-                vista.dispose();
-                new Controlador();
-                cambiarNiveles(1);
-                vfin.dispose();
-                modelo.restablecerVelocidad();
+                reiniciar();
                 break;
             case "Nivel 1":
                 //cambiarNivel1();
@@ -138,7 +116,44 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         }
     }
 
-    /*METODOS*/
+    public void reiniciar() {
+        vista.dispose();
+        new Controlador();
+        cambiarNiveles(1);
+        vfin.dispose();
+        modelo.restablecerVelocidad();
+    }
+
+    /**
+     * Creamos datos para almacenar los puntos y el nivel actual. Llamamos a la
+     * funcion de guardado que serializa.
+     */
+    public void guardarDatos() {
+        try {
+            data = new Datos(modelo.getAciertos(), modelo.getNivelActual());
+            serializador.guardar(data);
+        } catch (IOException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Creamos unos datos con lo que hemos leido en la carga.
+     */
+    public void cargarDatos() {
+        try {
+            data = serializador.cargar();
+            modelo.setAciertos(data.getPuntos());
+            vista.actualizaContador(modelo.getAciertos());
+            modelo.setNivelActual(data.getNivel());
+            cambiarNiveles(modelo.getNivelActual());
+            vista.refrescar();
+        } catch (IOException | ClassNotFoundException ex) {
+            Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     public void dibujarBandeja(Bandeja bandeja) {
         vista.dibujarBandeja(bandeja);
     }
@@ -166,9 +181,8 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         vista.refrescar();
     }
 
-    public void dileVistaActualizaCont(int contador) {
+    public void repintarContador(int contador) {
         vista.actualizaContador(contador);
-
     }
 
     public void cambiarNiveles(int nivel) {

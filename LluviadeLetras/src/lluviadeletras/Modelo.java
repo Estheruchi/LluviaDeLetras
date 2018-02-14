@@ -30,24 +30,25 @@ public class Modelo {
 
     private ArrayList<Letra> letras;
 
-    private Timer temporizadorCrear;
-    private int contador = 0;
-    private int puntuacion;
-    private boolean primeraLetra = false;
+    private Timer temporizador;
     private int tiempo = 1000;
-    private int velocidadLetras;
+    private int contadorTiempo = 0;
+
+    private int puntuacion;
     private int nivelActual;
-    private int contPuntuacionSeguidas;
+    private boolean primeraLetra = false;
+    private int velocidadLetras;
+    private int aciertosSeguidos;
 
     public Modelo(Controlador control) {
         this.control = control;
         this.bandeja = new Bandeja(this);
         this.puntuacion = 0;
-        this.contPuntuacionSeguidas = 0;
+        this.aciertosSeguidos = 0;
         this.nivelActual = 1;
         manejarBandeja();
         crearLetras();
-        timerCrear();
+        crearTimer();
 
     }
 
@@ -128,15 +129,17 @@ public class Modelo {
     }
 
     /**
-     * Llenamos el array de letras con tantas letras como se indique en
-     * NUM_LETRAS
+     * Crea el array de letras.
      */
     public void crearLetras() {
         letras = new ArrayList();
     }
 
     /**
-     *
+     * Genera un indice de manera aleatoria. Tenemos una bandera que marca si es
+     * la primera letra creada o no. Si lo es, la guarda y no vuelve a entrar.
+     * Si no es la primera, siempre la buscara y si la encuentra genera un nuevo
+     * indice hasta que no se repita.
      *
      */
     public void letraAleatoria() {
@@ -179,29 +182,25 @@ public class Modelo {
      * @param letra -> Letra a buscar.
      */
     public void buscarLetra(String letra) {
-        boolean bandera = true;
+        boolean encontrada = false;
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
-
             if (auxiliar.getText().equals(letra)) {
                 letras.remove(i);
                 auxiliar.setVisible(false);
                 puntuacion++;
-                contPuntuacionSeguidas++;
+                aciertosSeguidos++;
                 comprobarPuntuacion();
-                control.dileVistaActualizaCont(puntuacion);
-                bandera = false;
+                control.repintarContador(puntuacion);
+                encontrada = true;
             }
-
         }
-        if (bandera) {
-
+        if (!encontrada) {
             puntuacion--;
-            contPuntuacionSeguidas = 0;
+            aciertosSeguidos = 0;
             comprobarFin();
-            control.dileVistaActualizaCont(puntuacion);
-
+            control.repintarContador(puntuacion);
         }
     }
 
@@ -210,8 +209,8 @@ public class Modelo {
      * vuelve a iniciarlo a 0.
      */
     public void comprobarPuntuacion() {
-        if (contPuntuacionSeguidas == 10) {
-            contPuntuacionSeguidas = 0;
+        if (aciertosSeguidos == 10) {
+            aciertosSeguidos = 0;
             control.cambiarNiveles(nivelActual + 1);
         }
     }
@@ -226,18 +225,18 @@ public class Modelo {
      * choque con la bandeja.
      *
      */
-    public void timerCrear() {
-        temporizadorCrear = new Timer(tiempoCreacion, new ActionListener() {
+    public void crearTimer() {
+        temporizador = new Timer(tiempoCreacion, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (contador <= 0 || contador >= tiempo) {
+                if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
                     letraAleatoria();
                 }
-                contador += 50;
+                contadorTiempo += 50;
 
-                if (contador >= tiempo) {
-                    contador = 0;
+                if (contadorTiempo >= tiempo) {
+                    contadorTiempo = 0;
                 }
                 for (int i = 0; i < letras.size(); i++) {
                     Letra auxiliar = letras.get(i);
@@ -246,14 +245,14 @@ public class Modelo {
                 }
             }
         });
-        temporizadorCrear.start();
+        temporizador.start();
     }
 
     /**
      * Para el timer y finaliza la partida
      */
     public void fin() {
-        temporizadorCrear.stop();
+        temporizador.stop();
         control.fin();
     }
 
