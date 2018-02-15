@@ -16,9 +16,6 @@ import javax.swing.Timer;
  */
 public class Modelo {
 
-    private int NUM_LETRAS_NIVEL;
-    private int NUM_LETRAS = 25;
-
     private final String[] ABC = {"A", "B", "C", "D", "F", "G",
         "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
         "U", "V", "W", "X", "Y", "Z"};
@@ -30,6 +27,7 @@ public class Modelo {
     private Bandeja bandejaInf;
 
     private ArrayList<Letra> letras;
+    private ArrayList<Letra> numeros;
 
     private Timer temporizador;
     private int tiempo = 1000;
@@ -38,6 +36,7 @@ public class Modelo {
     private int puntuacion;
     private int nivelActual;
     private boolean primeraLetra = false;
+    private boolean primerNumero = false;
     private int velocidadLetras;
     private int aciertosSeguidos;
 
@@ -50,6 +49,7 @@ public class Modelo {
         this.nivelActual = 1;
         manejarBandeja();
         crearLetras();
+        crearNumeros();
         crearTimer();
 
     }
@@ -62,24 +62,32 @@ public class Modelo {
                 nivelActual = 1;
                 break;
             case "NIVEL 2":
-                velocidadLetras = 10;
+                velocidadLetras = 6;
                 tiempo = 900;
                 nivelActual = 2;
+                bandejaSup.setPosX(210);
+                bandejaInf.setPosX(290);
                 break;
             case "NIVEL 3":
-                velocidadLetras = 13;
+                velocidadLetras = 7;
                 tiempo = 800;
                 nivelActual = 3;
+                bandejaSup.setPosX(190);
+                bandejaInf.setPosX(310);
                 break;
             case "NIVEL 4":
-                velocidadLetras = 15;
+                velocidadLetras = 8;
                 tiempo = 700;
                 nivelActual = 4;
+                bandejaSup.setPosX(170);
+                bandejaInf.setPosX(330);
                 break;
             case "NIVEL 5":
-                velocidadLetras = 19;
+                velocidadLetras = 9;
                 tiempo = 550;
                 nivelActual = 5;
+                bandejaSup.setPosX(150);
+                bandejaInf.setPosX(360);
                 break;
         }
         for (int i = 0; i < letras.size(); i++) {
@@ -140,6 +148,10 @@ public class Modelo {
         letras = new ArrayList();
     }
 
+    public void crearNumeros() {
+        numeros = new ArrayList();
+    }
+
     /**
      * Genera un indice de manera aleatoria. Tenemos una bandera que marca si es
      * la primera letra creada o no. Si lo es, la guarda y no vuelve a entrar.
@@ -149,6 +161,7 @@ public class Modelo {
      */
     public void letraAleatoria() {
         int indice = generarNuevaLetra();
+
         if (!primeraLetra) {
             letras.add(new Letra(this, ABC[indice]));
             letras.get(letras.size() - 1).setText(ABC[indice]);
@@ -171,9 +184,52 @@ public class Modelo {
 
     }
 
+    public void numeroAleatorio() {
+        int num = generarNuevoNumero();
+        String textoNumero = "" + num;
+
+        if (!primerNumero) {
+
+            numeros.add(new Letra(this, textoNumero));
+            numeros.get(numeros.size() - 1).setText(textoNumero);
+            numeros.get(numeros.size() - 1).setVisible(true);
+            control.dibujarLetra(numeros.get(numeros.size() - 1));
+            primerNumero = true;
+        } else {
+
+            for (int i = 0; i < numeros.size(); i++) {
+                if (numeros.get(i).getText().equals(textoNumero)) {
+                    num = generarNuevoNumero();
+
+                    i = 0;
+                }
+            }
+            numeros.add(new Letra(this, textoNumero));
+            numeros.get(numeros.size() - 1).setText(textoNumero);
+            numeros.get(numeros.size() - 1).setVisible(true);
+            control.dibujarLetra(numeros.get(numeros.size() - 1));
+        }
+
+    }
+
+    /**
+     * Generar un numero del 1 al 24 para darselo al array de letras
+     *
+     * @return
+     */
     public int generarNuevaLetra() {
         int indice = (int) Math.floor(Math.random() * 24);
         return indice;
+    }
+
+    /**
+     * Dar un numero del 1 al 9 para generar numeros aleatorios
+     *
+     * @return
+     */
+    public int generarNuevoNumero() {
+        int num = (int) Math.floor(Math.random() * 9);
+        return num;
     }
 
     /**
@@ -191,13 +247,20 @@ public class Modelo {
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
+
             if (auxiliar.getText().equals(letra)) {
-                letras.remove(i);
-                auxiliar.setVisible(false);
-                puntuacion++;
-                aciertosSeguidos++;
-                comprobarPuntuacion();
-                control.repintarContador(puntuacion);
+                int n = auxiliar.getPulsaciones();
+                n--;
+                auxiliar.setPulsaciones(n);
+                auxiliar.generarColorPulsacion();
+                if (n <= 0) {
+                    letras.remove(i);
+                    auxiliar.setVisible(false);
+                    puntuacion++;
+                    aciertosSeguidos++;
+                    comprobarPuntuacion();
+                    control.repintarContador(puntuacion);
+                }
                 encontrada = true;
             }
         }
@@ -238,6 +301,7 @@ public class Modelo {
 
                 if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
                     letraAleatoria();
+                    numeroAleatorio();
                 }
                 contadorTiempo += 50;
 
@@ -246,6 +310,12 @@ public class Modelo {
                 }
                 for (int i = 0; i < letras.size(); i++) {
                     Letra auxiliar = letras.get(i);
+                    comprobarChoque();
+                    auxiliar.mover();
+                }
+
+                for (int i = 0; i < numeros.size(); i++) {
+                    Letra auxiliar = numeros.get(i);
                     comprobarChoque();
                     auxiliar.mover();
                 }
@@ -263,7 +333,9 @@ public class Modelo {
     }
 
     /**
-     * Comprueba el choque de las letras con la bandeja CAMBIAR
+     * Comprueba los choques. Si choca con la bandeja superior cambia la
+     * direccion a bajando y si choca con la bandeja inferior cambia la
+     * direccion a subiendo.
      */
     public void comprobarChoque() {
         for (int i = 0; i < letras.size(); i++) {
@@ -273,12 +345,11 @@ public class Modelo {
                     && letras.get(i).getX() < bandejaInf.getX() + 95
                     && letras.get(i).getDireccion() == 0) {
                 letras.get(i).cambiarDireccion();
-            }
 
-            else if (letras.get(i).getY() <= 40
+            } else if (letras.get(i).getY() <= 40
                     && letras.get(i).getX() > bandejaInf.getX() - 40
                     && letras.get(i).getX() < bandejaInf.getX() + 95
-                    && letras.get(i).getDireccion() == 1 ) {
+                    && letras.get(i).getDireccion() == 1) {
                 letras.get(i).cambiarDireccion();
             }
         }

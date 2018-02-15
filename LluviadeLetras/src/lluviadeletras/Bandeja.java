@@ -16,16 +16,21 @@ public class Bandeja extends JLabel {
     private static String RUTA = "/Imagenes/";
     private static String FICHERO = "barrita.png";
     private static int AVANCE = 20;
-
+    private static int DERECHO=1;
+    private static int IZQUIERDO=2;
+    private static int NINGUNO=0;
+    private static int limite;
+    
     private int posY;
     private int posX;
     private Modelo modelo;
-
+    
     public Bandeja(Modelo modelo, int posY) {
         this.posY = posY;
         this.modelo = modelo;
         this.posX = 250;
         dibujarBandeja();
+        limite=NINGUNO;
     }
 
     public void dibujarBandeja() {
@@ -42,21 +47,24 @@ public class Bandeja extends JLabel {
      * @param direccion -> 0 derecha - 1 izquierda
      */
     public void mover(int direccion) {
-
         int ancho = modelo.anchoVentana();
 
         switch (direccion) {
             case 0:
                 if (posX + 100 >= ancho) {
                     posX = ancho - 100;
-                } else {
+                    limite=DERECHO;
+                } else if(limite==IZQUIERDO || limite==NINGUNO){
                     posX += AVANCE;
                 }
+
                 break;
+                
             case 1:
                 if (posX + 100 <= 100) {
                     posX = 0;
-                } else {
+                    limite=IZQUIERDO;
+                } else if(limite==DERECHO || limite==NINGUNO){
                     posX -= AVANCE;
                 }
                 break;
@@ -72,4 +80,10 @@ public class Bandeja extends JLabel {
         return posX;
     }
 
+    public void setPosX(int posX) {
+        this.posX = posX;
+        this.setLocation(posX, posY);
+    }
+
+    
 }

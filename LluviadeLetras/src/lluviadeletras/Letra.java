@@ -47,12 +47,32 @@ public class Letra extends JButton {
         dibujarPanel();
     }
 
+    
     public void generarVelocidad() {
         this.velocidad = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
     }
 
+    /**
+     * Genera mediante un aletorio el numero de pulsaciones necesarios para elimianr una letra.
+     */
     public void generarPulsaciones() {
         this.pulsaciones = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
+        generarColorPulsacion();
+    }
+    
+    
+    public void generarColorPulsacion(){
+        switch (pulsaciones) {
+            case 1:
+                this.setForeground(Color.GREEN);
+                break;
+            case 2:
+                this.setForeground(Color.ORANGE);
+                break;
+            case 3:
+                this.setForeground(Color.RED);
+                break;
+        }
     }
 
     /**
@@ -87,7 +107,6 @@ public class Letra extends JButton {
     public void dibujarPanel() {
         this.setBounds(posX, posY, ALTO, ANCHO);
         this.setFont(new Font("Arial", 1, 18));
-        this.setForeground(Color.RED);
     }
 
     /**
@@ -127,5 +146,16 @@ public class Letra extends JButton {
     public int getDireccion() {
         return direccion;
     }
+
+    public int getPulsaciones() {
+        return pulsaciones;
+    }
+
+    public void setPulsaciones(int pulsaciones) {
+        this.pulsaciones = pulsaciones;
+    }
+    
+    
+    
 
 }
