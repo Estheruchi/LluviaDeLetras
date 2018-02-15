@@ -26,7 +26,8 @@ public class Modelo {
     private int tiempoCreacion = 50;
 
     private Controlador control;
-    private Bandeja bandeja;
+    private Bandeja bandejaSup;
+    private Bandeja bandejaInf;
 
     private ArrayList<Letra> letras;
 
@@ -42,7 +43,8 @@ public class Modelo {
 
     public Modelo(Controlador control) {
         this.control = control;
-        this.bandeja = new Bandeja(this);
+        this.bandejaSup = new Bandeja(this, 40);
+        this.bandejaInf = new Bandeja(this, 450);
         this.puntuacion = 0;
         this.aciertosSeguidos = 0;
         this.nivelActual = 1;
@@ -81,13 +83,13 @@ public class Modelo {
                 break;
         }
         for (int i = 0; i < letras.size(); i++) {
-            letras.get(i).setVELOCIDAD(velocidadLetras);
+            letras.get(i).setAVANCE(velocidadLetras);
         }
     }
 
     public void restablecerVelocidad() {
         for (int i = 0; i < letras.size(); i++) {
-            letras.get(i).setVELOCIDAD(5);
+            letras.get(i).setAVANCE(5);
         }
     }
 
@@ -95,7 +97,8 @@ public class Modelo {
      * Dibujamos la bandeja.
      */
     public void manejarBandeja() {
-        control.dibujarBandeja(bandeja);
+        control.dibujarBandeja(bandejaSup);
+        control.dibujarBandeja(bandejaInf);
     }
 
     /**
@@ -118,14 +121,16 @@ public class Modelo {
      * Mueve la bandeja a la Derecha
      */
     public void moverDcha() {
-        bandeja.mover(0);
+        bandejaSup.mover(0);
+        bandejaInf.mover(0);
     }
 
     /**
      * Mueve la bandeja a la Izquierda
      */
     public void moverIzqda() {
-        bandeja.mover(1);
+        bandejaSup.mover(1);
+        bandejaInf.mover(1);
     }
 
     /**
@@ -258,14 +263,14 @@ public class Modelo {
     }
 
     /**
-     * Comprueba el choque de las letras con la bandeja
+     * Comprueba el choque de las letras con la bandeja CAMBIAR
      */
     public void comprobarChoque() {
         for (int i = 0; i < letras.size(); i++) {
 
             if (letras.get(i).getY() >= 360
-                    && letras.get(i).getX() > bandeja.getX() - 95
-                    && letras.get(i).getX() < bandeja.getX() + 95
+                    && letras.get(i).getX() > bandejaInf.getX() - 95
+                    && letras.get(i).getX() < bandejaInf.getX() + 95
                     && letras.get(i).getDireccion() == 0) {
                 letras.get(i).cambiarDireccion();
             }

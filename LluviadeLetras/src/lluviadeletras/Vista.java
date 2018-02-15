@@ -135,7 +135,7 @@ public class Vista extends JFrame {
 
         nivelActual = new JLabel("NIVEL " + nivel);
         fondo.add(nivelActual);
-        nivelActual.setBounds(410, 70, 300, 40);
+        nivelActual.setBounds(410, 10, 300, 40);
         nivelActual.setFont(cl.MyFont(1, 31f));
         nivelActual.setForeground(Color.WHITE);
     }

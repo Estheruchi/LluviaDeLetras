@@ -17,7 +17,7 @@ public class Letra extends JButton {
     /*VARIABLES COMUNES*/
     private static final int ALTO = 50;
     private static final int ANCHO = 50;
-    private static int VELOCIDAD = 5;
+    private static int AVANCE = 5;
     private static int SUBIENDO = 1;
     private static int BAJANDO = 0;
 
@@ -26,6 +26,10 @@ public class Letra extends JButton {
     private Color color;
     private String letra;
     private int direccion;
+
+    private int velocidad;
+    private int pulsaciones;
+
     private int posX;
     private int posY = - 50;
 
@@ -38,7 +42,17 @@ public class Letra extends JButton {
         this.setOpaque(false);
 
         generarPosicion();
+        generarVelocidad();
+        generarPulsaciones();
         dibujarPanel();
+    }
+
+    public void generarVelocidad() {
+        this.velocidad = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+    }
+
+    public void generarPulsaciones() {
+        this.pulsaciones = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
     }
 
     /**
@@ -85,13 +99,13 @@ public class Letra extends JButton {
             if (posY >= (modelo.altoVentana() - 100)) {
                 modelo.fin();
             } else {
-                posY += VELOCIDAD;
+                posY += AVANCE;
             }
         } else {
             if (posY <= 0) {
                 modelo.fin();
             } else {
-                posY -= VELOCIDAD;
+                posY -= AVANCE;
             }
         }
         this.setLocation(posX, posY);
@@ -100,10 +114,10 @@ public class Letra extends JButton {
     /**
      * Establece la nueva velocidad (pixeles) de moviemiento de la letra.
      *
-     * @param VELOCIDAD -> número de píxeles que "saltará" la letra al moverse.
+     * @param AVANCE -> número de píxeles que "saltará" la letra al moverse.
      */
-    public void setVELOCIDAD(int VELOCIDAD) {
-        Letra.VELOCIDAD = VELOCIDAD;
+    public void setAVANCE(int AVANCE) {
+        Letra.AVANCE = AVANCE;
     }
 
     /**

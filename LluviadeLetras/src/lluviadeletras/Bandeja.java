@@ -16,20 +16,20 @@ public class Bandeja extends JLabel {
     private static String RUTA = "/Imagenes/";
     private static String FICHERO = "barrita.png";
     private static int AVANCE = 20;
-    private int POSICION_Y = 400;
 
-    private int posicionX;
+    private int posY;
+    private int posX;
     private Modelo modelo;
 
-    public Bandeja(Modelo modelo) {
+    public Bandeja(Modelo modelo, int posY) {
+        this.posY = posY;
         this.modelo = modelo;
-        this.posicionX = 250;
+        this.posX = 250;
         dibujarBandeja();
     }
-    
 
     public void dibujarBandeja() {
-        this.setBounds(posicionX, POSICION_Y, 100, 20);
+        this.setBounds(posX, posY, 100, 20);
         URL url = this.getClass().getResource(RUTA + FICHERO);
         ImageIcon icon = new ImageIcon(url);
         this.setIcon(icon);
@@ -47,29 +47,29 @@ public class Bandeja extends JLabel {
 
         switch (direccion) {
             case 0:
-                if (posicionX + 100 >= ancho) {
-                    posicionX = ancho - 100;
+                if (posX + 100 >= ancho) {
+                    posX = ancho - 100;
                 } else {
-                    posicionX += AVANCE;
+                    posX += AVANCE;
                 }
                 break;
             case 1:
-                if (posicionX + 100 <= 100) {
-                    posicionX = 0;
+                if (posX + 100 <= 100) {
+                    posX = 0;
                 } else {
-                    posicionX -= AVANCE;
+                    posX -= AVANCE;
                 }
                 break;
         }
-        this.setLocation(posicionX, POSICION_Y);
+        this.setLocation(posX, posY);
     }
 
-    public int getPOSICION_Y() {
-        return POSICION_Y;
+    public int getposY() {
+        return posY;
     }
 
-    public int getPosicionX() {
-        return posicionX;
+    public int getPosX() {
+        return posX;
     }
 
 }
