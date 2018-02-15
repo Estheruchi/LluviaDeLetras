@@ -268,10 +268,17 @@ public class Modelo {
     public void comprobarChoque() {
         for (int i = 0; i < letras.size(); i++) {
 
-            if (letras.get(i).getY() >= 360
-                    && letras.get(i).getX() > bandejaInf.getX() - 95
+            if (letras.get(i).getY() >= 410
+                    && letras.get(i).getX() > bandejaInf.getX() - 40
                     && letras.get(i).getX() < bandejaInf.getX() + 95
                     && letras.get(i).getDireccion() == 0) {
+                letras.get(i).cambiarDireccion();
+            }
+
+            else if (letras.get(i).getY() <= 40
+                    && letras.get(i).getX() > bandejaInf.getX() - 40
+                    && letras.get(i).getX() < bandejaInf.getX() + 95
+                    && letras.get(i).getDireccion() == 1 ) {
                 letras.get(i).cambiarDireccion();
             }
         }
