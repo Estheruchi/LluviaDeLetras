@@ -13,10 +13,12 @@ public class Datos implements Serializable {
 
     int nivel = 0;
     int puntos = 0;
+    String nombre;
 
-    public Datos(int puntos, int nivel) {
+    public Datos(int puntos, int nivel,String nombre) {
         this.nivel = nivel;
         this.puntos = puntos;
+        this.nombre = nombre;
     }
 
     public int getNivel() {
@@ -34,5 +36,15 @@ public class Datos implements Serializable {
     public void setPuntos(int puntos) {
         this.puntos = puntos;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
 
 }

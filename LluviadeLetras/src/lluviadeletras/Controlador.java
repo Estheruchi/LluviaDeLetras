@@ -25,11 +25,10 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     private String nombre;
 
     public Controlador() {
-        this.nombre="Jugador 1";
-        vista = new Vista(this,nombre);
+        this.nombre = "Jugador 1";
+        vista = new Vista(this, nombre);
         modelo = new Modelo(this);
         serializador = new Serializador();
-        
     }
 
     @Override
@@ -88,7 +87,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
             case "Cambiar nombre de usuario":
                 modelo.pararTimer();
-                nombre=JOptionPane.showInputDialog(null,"Nick: ");
+                nombre = JOptionPane.showInputDialog(null, "Nick: ");
                 modelo.iniciarTimer();
                 vista.setNombre(nombre);
                 break;
@@ -127,7 +126,6 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         new Controlador();
         cambiarNiveles(1);
         vfin.dispose();
-       // modelo.restablecerVelocidad();
     }
 
     /**
@@ -136,7 +134,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
      */
     public void guardarDatos() {
         try {
-            data = new Datos(modelo.getAciertos(), modelo.getNivelActual());
+            data = new Datos(modelo.getAciertos(), modelo.getNivelActual(), nombre);
             serializador.guardar(data);
         } catch (IOException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,6 +150,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
             modelo.setAciertos(data.getPuntos());
             vista.actualizaContador(modelo.getAciertos());
             modelo.setNivelActual(data.getNivel());
+            vista.setNombre(data.getNombre());
             cambiarNiveles(modelo.getNivelActual());
             vista.refrescar();
         } catch (IOException | ClassNotFoundException ex) {
@@ -191,25 +190,26 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         vista.actualizaContador(contador);
     }
 
+    /**
+     * Recibe el nivel al que tiene que cambiar siempre que sea distinto de nivel 1, muestra en un
+     * cuadro de dialogo el nivel al que se cambia.
+     * @param nivel 
+     */
     public void cambiarNiveles(int nivel) {
-        
-        if(nivel!=1){
+
+        if (nivel != 1) {
             modelo.pararTimer();
             JOptionPane.showMessageDialog(null, "NIVEL " + nivel);
             modelo.iniciarTimer();
-        }
-        else if(nivel>=4){
+        } else if (nivel >= 4) {
             modelo.iniciarNumeros();
         }
         vista.actualizaNivel(nivel);
         modelo.cambiarNivel("NIVEL " + nivel);
-        
     }
 
     public void cambiaColor(Boolean encontrada) {
         vista.cambiaColor(encontrada);
     }
-    
-    
-}
 
+}

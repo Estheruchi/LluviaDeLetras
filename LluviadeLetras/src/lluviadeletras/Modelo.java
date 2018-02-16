@@ -57,37 +57,37 @@ public class Modelo {
         lanzaLetras();
     }
 
+    /**
+     * Metodo para cambiar la logica de los niveles, recibe el nivel y en funcion de cual sea
+     * actualiza el tiempo de creacion y las posiciones de las bandejas superior e inferior
+     * @param lvl 
+     */
     public void cambiarNivel(String lvl) {
         switch (lvl) {
             case "NIVEL 1":
-                //velocidadLetras = 1;
                 tiempo = 1000;
                 nivelActual = 1;
                 break;
             case "NIVEL 2":
-                //velocidadLetras = 2;
                 tiempo = 900;
                 nivelActual = 2;
                 bandejaSup.setPosX(210);
                 bandejaInf.setPosX(290);
                 break;
             case "NIVEL 3":
-                //velocidadLetras = 3;
-                tiempo = 800;
+                tiempo = 850;
                 nivelActual = 3;
                 bandejaSup.setPosX(190);
                 bandejaInf.setPosX(310);
                 break;
             case "NIVEL 4":
-                //velocidadLetras = 4;
-                tiempo = 700;
+                tiempo = 800;
                 nivelActual = 4;
                 bandejaSup.setPosX(170);
                 bandejaInf.setPosX(330);
                 break;
             case "NIVEL 5":
-                //velocidadLetras = 5;
-                tiempo = 550;
+                tiempo = 750;
                 nivelActual = 5;
                 bandejaSup.setPosX(150);
                 bandejaInf.setPosX(360);
@@ -136,7 +136,7 @@ public class Modelo {
     }
 
     /**
-     * Crea el array de letras.
+     * Crea el array de letras,numeros y timers.
      */
     public void crearLetras() {
         letras = new ArrayList();
@@ -179,10 +179,12 @@ public class Modelo {
             letras.get(letras.size() - 1).setVisible(true);
             control.dibujarLetra(letras.get(letras.size() - 1));
         }
-
-        //return letras.get(letras.size() - 1);
     }
 
+    /**
+     * Metodo igual que el de generar letras aleatorias, pero para numeros, se pasa el numero aleatorio
+     * entre 1 y 9 a string. Si salen los 9 numeros en pantalla, deja de generarlos (array lleno).
+     */
     public void numeroAleatorio() {
         String textoNumero = generarNuevoNumero();
         //String textoNumero = "" + num;
@@ -239,9 +241,11 @@ public class Modelo {
      * Recibe una letra y la busca en el array de letras actuales en pantalla.
      * Si la encuentra: La elimina, aumenta la puntuacion, aumenta el contador
      * de letras acertadas seguidas y comprueba si ha llegado a 10 para subir el
-     * nivel. Actualiza la vista por medio del controlador. La bandera marca si
+     * nivel. 
+     * Si no la encuentra realiza el mismo proceso en busca de un numero.
+     * Actualiza la vista por medio del controlador. La bandera marca si
      * se ha encontrado o no para así restar puntos, comprobar si se ha llegado
-     * a 0 en la puntuacion y finalizar la partida.
+     * a 0 en la puntuacion y finalizar la partida. 
      *
      * @param letra -> Letra a buscar.
      */
@@ -327,7 +331,7 @@ public class Modelo {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (tiempo == 550 || tiempo == 700) {
+                if (tiempo == 750 || tiempo == 800) {
                     if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
                         numeroAleatorio();
                     }
@@ -351,6 +355,9 @@ public class Modelo {
         temporizador.start();
     }
 
+    /**
+     * Comprueba si hay choque y desplaza las letras hacia arriba o hacia abajo
+     */
     public void comprobarLetras() {
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
@@ -359,6 +366,9 @@ public class Modelo {
         }
     }
 
+    /**
+     * Comprueba si hay choque y desplaza los numeros hacia arriba o hacia abajo
+     */
     public void comprobarNumeros() {
         for (int i = 0; i < numeros.size(); i++) {
             Letra auxiliar = numeros.get(i);
@@ -404,6 +414,9 @@ public class Modelo {
 
     }
 
+    /**
+     * Misma funcionalidad de las letras pero con el array de numeros
+     */
     public void comprobarChoqueNumeros() {
         for (int i = 0; i < numeros.size(); i++) {
 

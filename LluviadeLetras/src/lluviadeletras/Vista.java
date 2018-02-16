@@ -229,6 +229,7 @@ public class Vista extends JFrame {
         this.nombre = nombre;
         etiquetaNombre.setText(nombre);
     }
+
     
     
 }
