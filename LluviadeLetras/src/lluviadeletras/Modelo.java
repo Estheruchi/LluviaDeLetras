@@ -32,8 +32,8 @@ public class Modelo {
 
     private Timer temporizador;
     private int tiempo = 1000;
-    private int tiempoMovimiento;
     private int contadorTiempo = 0;
+    private int idTimer;
 
     private int puntuacion;
     private int nivelActual;
@@ -49,57 +49,49 @@ public class Modelo {
         this.puntuacion = 0;
         this.aciertosSeguidos = 0;
         this.nivelActual = 1;
+        this.idTimer = 0;
+
         manejarBandeja();
         crearLetras();
         crearNumeros();
         lanzaLetras();
-        crearTimers();
     }
 
     public void cambiarNivel(String lvl) {
         switch (lvl) {
             case "NIVEL 1":
-                velocidadLetras = 1;
+                //velocidadLetras = 1;
                 tiempo = 1000;
                 nivelActual = 1;
                 break;
             case "NIVEL 2":
-                velocidadLetras = 2;
+                //velocidadLetras = 2;
                 tiempo = 900;
                 nivelActual = 2;
                 bandejaSup.setPosX(210);
                 bandejaInf.setPosX(290);
                 break;
             case "NIVEL 3":
-                velocidadLetras = 3;
+                //velocidadLetras = 3;
                 tiempo = 800;
                 nivelActual = 3;
                 bandejaSup.setPosX(190);
                 bandejaInf.setPosX(310);
                 break;
             case "NIVEL 4":
-                velocidadLetras = 4;
+                //velocidadLetras = 4;
                 tiempo = 700;
                 nivelActual = 4;
                 bandejaSup.setPosX(170);
                 bandejaInf.setPosX(330);
                 break;
             case "NIVEL 5":
-                velocidadLetras = 5;
+                //velocidadLetras = 5;
                 tiempo = 550;
                 nivelActual = 5;
                 bandejaSup.setPosX(150);
                 bandejaInf.setPosX(360);
                 break;
-        }
-        for (int i = 0; i < letras.size(); i++) {
-            letras.get(i).setAVANCE(velocidadLetras);
-        }
-    }
-
-    public void restablecerVelocidad() {
-        for (int i = 0; i < letras.size(); i++) {
-            letras.get(i).setAVANCE(5);
         }
     }
 
@@ -153,8 +145,8 @@ public class Modelo {
     public void crearNumeros() {
         numeros = new ArrayList();
     }
-    
-    public void crearTimers(){
+
+    public void crearTimers() {
         timers = new ArrayList();
     }
 
@@ -165,7 +157,7 @@ public class Modelo {
      * indice hasta que no se repita.
      *
      */
-    public Letra letraAleatoria() {
+    public void letraAleatoria() {
         int indice = generarNuevaLetra();
 
         if (!primeraLetra) {
@@ -187,14 +179,13 @@ public class Modelo {
             letras.get(letras.size() - 1).setVisible(true);
             control.dibujarLetra(letras.get(letras.size() - 1));
         }
-        
-        return letras.get(letras.size() - 1);
 
+        //return letras.get(letras.size() - 1);
     }
 
     public void numeroAleatorio() {
-        int num = generarNuevoNumero();
-        String textoNumero = "" + num;
+        String textoNumero = generarNuevoNumero();
+        //String textoNumero = "" + num;
 
         if (!primerNumero) {
 
@@ -207,10 +198,16 @@ public class Modelo {
 
             for (int i = 0; i < numeros.size(); i++) {
                 if (numeros.get(i).getText().equals(textoNumero)) {
-                    num = generarNuevoNumero();
-                    i = 0;
+
+                    if (numeros.size() < 9) {
+                        textoNumero = generarNuevoNumero();
+                        i = 0;
+                    }
+
+                    
                 }
             }
+
             numeros.add(new Letra(this, textoNumero));
             numeros.get(numeros.size() - 1).setText(textoNumero);
             numeros.get(numeros.size() - 1).setVisible(true);
@@ -234,9 +231,10 @@ public class Modelo {
      *
      * @return
      */
-    public int generarNuevoNumero() {
+    public String generarNuevoNumero() {
         int num = (int) Math.floor(Math.random() * 9);
-        return num;
+        String numero = "" + num;
+        return numero;
     }
 
     /**
@@ -251,6 +249,8 @@ public class Modelo {
      */
     public void buscarLetra(String letra) {
         boolean encontrada = false;
+        boolean esNum = false;
+
         letra = letra.toUpperCase();
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
@@ -261,11 +261,7 @@ public class Modelo {
                 auxiliar.setPulsaciones(n);
                 auxiliar.generarColorPulsacion();
                 if (n <= 0) {
-                    
-                    timers.get(letras.get(i).getId()).stop();
-                    letras.remove(i);                    
-                    timers.remove(letras.get(i).getId());
-                    
+                    letras.remove(i);
                     auxiliar.setVisible(false);
                     puntuacion++;
                     aciertosSeguidos++;
@@ -275,12 +271,35 @@ public class Modelo {
                 encontrada = true;
             }
         }
+
         if (!encontrada) {
-            puntuacion--;
-            aciertosSeguidos = 0;
-            comprobarFin();
-            control.repintarContador(puntuacion);
+            for (int i = 0; i < numeros.size(); i++) {
+                Letra auxiliar = numeros.get(i);
+
+                if (auxiliar.getText().equals(letra)) {
+                    int n = auxiliar.getPulsaciones();
+                    n--;
+                    auxiliar.setPulsaciones(n);
+                    auxiliar.generarColorPulsacion();
+                    if (n <= 0) {
+                        numeros.remove(i);
+                        auxiliar.setVisible(false);
+                        puntuacion++;
+                        aciertosSeguidos++;
+                        comprobarPuntuacion();
+                        control.repintarContador(puntuacion);
+                    }
+                    esNum = true;
+                }
+            }
+            if (!esNum) {
+                puntuacion--;
+                aciertosSeguidos = 0;
+                comprobarFin();
+                control.repintarContador(puntuacion);
+            }
         }
+
         control.cambiaColor(encontrada);
     }
 
@@ -312,14 +331,12 @@ public class Modelo {
 
                 if (tiempo == 550 || tiempo == 700) {
                     if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
-                        // numeroAleatorio();
+                        numeroAleatorio();
                     }
                 }
 
                 if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
-                    
-                    moverLetra(letraAleatoria());
-                    //establecerVelocidad();
+                    letraAleatoria();
                 }
 
                 contadorTiempo += 50;
@@ -340,7 +357,7 @@ public class Modelo {
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
             comprobarChoque();
-            //auxiliar.mover();
+            auxiliar.mover();
         }
     }
 
@@ -361,11 +378,8 @@ public class Modelo {
      */
     public void fin() {
         temporizador.stop();
-        for (int i = 0; i < timers.size(); i++) {
-            timers.get(i).stop();
-        }
         control.fin();
-        
+
     }
 
     /**
@@ -398,6 +412,7 @@ public class Modelo {
     public void comprobarFin() {
         if (puntuacion < 0) {
             fin();
+
         }
     }
 
@@ -428,21 +443,5 @@ public class Modelo {
     public void iniciarTimer() {
         temporizador.start();
     }
-    
-    public void moverLetra(Letra letra){
-        int veloTimer=letra.getVelocidad();
-        
-        Timer timerMover = new Timer(veloTimer,new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                letra.mover();
-            }
-        });
-        timers.add(timerMover);
-        letra.setIdTimer(timers.size()-1);
-        timerMover.start();
-    }
-
-
 
 }

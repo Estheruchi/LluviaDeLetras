@@ -17,7 +17,7 @@ public class Letra extends JButton {
     /*VARIABLES COMUNES*/
     private static final int ALTO = 50;
     private static final int ANCHO = 50;
-    private static int AVANCE = 5;
+    
     private static int SUBIENDO = 1;
     private static int BAJANDO = 0;
 
@@ -27,12 +27,13 @@ public class Letra extends JButton {
     private String letra;
     private int direccion;
 
-    private int velocidad;
+    //private int velocidad;
     private int pulsaciones;
+    private int avance;
 
     private int posX;
     private int posY = - 50;
-    private int id;
+    private int idTimer;
 
     /*CONSTRUCTOR*/
     public Letra(Modelo modelo, String letra) {
@@ -49,24 +50,8 @@ public class Letra extends JButton {
     }
 
     public void generarVelocidad() {
-        int n = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
-        switch (n) {
-            case 1:
-                velocidad = 100;
-                break;
-            case 2:
-                velocidad = 90;
-                break;
-            case 3:
-                velocidad = 80;
-                break;
-            case 4:
-                velocidad = 70;
-                break;
-            case 5:
-                velocidad = 60;
-                break;
-        }
+        this.avance = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+  
     }
 
     /**
@@ -135,25 +120,16 @@ public class Letra extends JButton {
             if (posY >= (modelo.altoVentana() - 100)) {
                 modelo.fin();
             } else {
-                posY += AVANCE;
+                posY += avance; 
             }
         } else {
             if (posY <= 0) {
                 modelo.fin();
             } else {
-                posY -= AVANCE;
+                posY -= avance;
             }
         }
         this.setLocation(posX, posY);
-    }
-
-    /**
-     * Establece la nueva velocidad (pixeles) de moviemiento de la letra.
-     *
-     * @param AVANCE -> número de píxeles que "saltará" la letra al moverse.
-     */
-    public void setAVANCE(int AVANCE) {
-        Letra.AVANCE = AVANCE;
     }
 
     /**
@@ -172,17 +148,12 @@ public class Letra extends JButton {
         this.pulsaciones = pulsaciones;
     }
 
-    public int getVelocidad() {
-        return velocidad;
+    public void setIdTimer(int idTimer) {
+        this.idTimer=idTimer;
     }
 
-    public void setIdTimer(int id) {
-        this.id=id;
+    public int getIdTimer() {
+        return idTimer;
     }
-
-    public int getId() {
-        return id;
-    }
-
     
 }

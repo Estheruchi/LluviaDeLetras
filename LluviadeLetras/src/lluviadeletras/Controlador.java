@@ -137,7 +137,7 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
         new Controlador();
         cambiarNiveles(1);
         vfin.dispose();
-        modelo.restablecerVelocidad();
+       // modelo.restablecerVelocidad();
     }
 
     /**
