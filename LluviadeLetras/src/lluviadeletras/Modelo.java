@@ -203,8 +203,6 @@ public class Modelo {
                         textoNumero = generarNuevoNumero();
                         i = 0;
                     }
-
-                    
                 }
             }
 
@@ -356,7 +354,7 @@ public class Modelo {
     public void comprobarLetras() {
         for (int i = 0; i < letras.size(); i++) {
             Letra auxiliar = letras.get(i);
-            comprobarChoque();
+            comprobarChoqueLetras();
             auxiliar.mover();
         }
     }
@@ -364,7 +362,7 @@ public class Modelo {
     public void comprobarNumeros() {
         for (int i = 0; i < numeros.size(); i++) {
             Letra auxiliar = numeros.get(i);
-            comprobarChoque();
+            comprobarChoqueNumeros();
             auxiliar.mover();
         }
     }
@@ -387,7 +385,7 @@ public class Modelo {
      * direccion a bajando y si choca con la bandeja inferior cambia la
      * direccion a subiendo.
      */
-    public void comprobarChoque() {
+    public void comprobarChoqueLetras() {
         for (int i = 0; i < letras.size(); i++) {
 
             if (letras.get(i).getY() >= 410
@@ -406,6 +404,24 @@ public class Modelo {
 
     }
 
+    public void comprobarChoqueNumeros() {
+        for (int i = 0; i < numeros.size(); i++) {
+
+            if (numeros.get(i).getY() >= 410
+                    && numeros.get(i).getX() > bandejaInf.getX() - 40
+                    && numeros.get(i).getX() < bandejaInf.getX() + 95
+                    && numeros.get(i).getDireccion() == 0) {
+                numeros.get(i).cambiarDireccion();
+
+            } else if (numeros.get(i).getY() <= 40
+                    && numeros.get(i).getX() > bandejaSup.getX() - 40
+                    && numeros.get(i).getX() < bandejaSup.getX() + 95
+                    && numeros.get(i).getDireccion() == 1) {
+                numeros.get(i).cambiarDireccion();
+            }
+        }
+
+    }
     /**
      * Comprueba si la puntuacion ha llegado a 0 y si es asi finaliza.
      */

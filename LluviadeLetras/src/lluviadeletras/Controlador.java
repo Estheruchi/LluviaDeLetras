@@ -55,16 +55,6 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
                 break;
             case KeyEvent.VK_CONTROL:
                 break;
-            case KeyEvent.VK_1:
-                break;
-            case KeyEvent.VK_2:
-                break;
-            case KeyEvent.VK_3:
-                break;
-            case KeyEvent.VK_4:
-                break;
-            case KeyEvent.VK_5:
-                break;
             default:
                 modelo.buscarLetra("" + e.getKeyChar());
         }
