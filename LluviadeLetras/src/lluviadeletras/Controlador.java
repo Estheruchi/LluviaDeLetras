@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,11 +22,14 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     private VistaFin vfin;
     private Serializador serializador;
     private Datos data;
+    private String nombre;
 
     public Controlador() {
-        vista = new Vista(this);
+        this.nombre="Jugador 1";
+        vista = new Vista(this,nombre);
         modelo = new Modelo(this);
         serializador = new Serializador();
+        
     }
 
     @Override
@@ -86,6 +90,19 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
             case "REINTENTAR":
                 reiniciar();
                 break;
+            case "Parar partida":
+                modelo.pararTimer();
+                break;
+            case "Reanudar partida":
+                modelo.iniciarTimer();
+                break;
+            case "Cambiar nombre de usuario":
+                modelo.pararTimer();
+                nombre=JOptionPane.showInputDialog(null,"Nick: ");
+                modelo.iniciarTimer();
+                vista.setNombre(nombre);
+                break;
+
             case "Nivel 1":
                 cambiarNiveles(1);
                 modelo.setAciertos(0);
@@ -185,11 +202,24 @@ public class Controlador extends MouseAdapter implements KeyListener, ActionList
     }
 
     public void cambiarNiveles(int nivel) {
+        
+        if(nivel!=1){
+            modelo.pararTimer();
+            JOptionPane.showMessageDialog(null, "NIVEL " + nivel);
+            modelo.iniciarTimer();
+        }
+        else if(nivel>=4){
+            modelo.iniciarNumeros();
+        }
         vista.actualizaNivel(nivel);
         modelo.cambiarNivel("NIVEL " + nivel);
+        
     }
 
     public void cambiaColor(Boolean encontrada) {
         vista.cambiaColor(encontrada);
     }
+    
+    
 }
+

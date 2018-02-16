@@ -28,9 +28,11 @@ public class Modelo {
 
     private ArrayList<Letra> letras;
     private ArrayList<Letra> numeros;
+    private ArrayList<Timer> timers;
 
     private Timer temporizador;
     private int tiempo = 1000;
+    private int tiempoMovimiento;
     private int contadorTiempo = 0;
 
     private int puntuacion;
@@ -50,40 +52,40 @@ public class Modelo {
         manejarBandeja();
         crearLetras();
         crearNumeros();
-        crearTimer();
-
+        lanzaLetras();
+        crearTimers();
     }
 
     public void cambiarNivel(String lvl) {
         switch (lvl) {
             case "NIVEL 1":
-                velocidadLetras = 5;
+                velocidadLetras = 1;
                 tiempo = 1000;
                 nivelActual = 1;
                 break;
             case "NIVEL 2":
-                velocidadLetras = 6;
+                velocidadLetras = 2;
                 tiempo = 900;
                 nivelActual = 2;
                 bandejaSup.setPosX(210);
                 bandejaInf.setPosX(290);
                 break;
             case "NIVEL 3":
-                velocidadLetras = 7;
+                velocidadLetras = 3;
                 tiempo = 800;
                 nivelActual = 3;
                 bandejaSup.setPosX(190);
                 bandejaInf.setPosX(310);
                 break;
             case "NIVEL 4":
-                velocidadLetras = 8;
+                velocidadLetras = 4;
                 tiempo = 700;
                 nivelActual = 4;
                 bandejaSup.setPosX(170);
                 bandejaInf.setPosX(330);
                 break;
             case "NIVEL 5":
-                velocidadLetras = 9;
+                velocidadLetras = 5;
                 tiempo = 550;
                 nivelActual = 5;
                 bandejaSup.setPosX(150);
@@ -151,6 +153,10 @@ public class Modelo {
     public void crearNumeros() {
         numeros = new ArrayList();
     }
+    
+    public void crearTimers(){
+        timers = new ArrayList();
+    }
 
     /**
      * Genera un indice de manera aleatoria. Tenemos una bandera que marca si es
@@ -159,7 +165,7 @@ public class Modelo {
      * indice hasta que no se repita.
      *
      */
-    public void letraAleatoria() {
+    public Letra letraAleatoria() {
         int indice = generarNuevaLetra();
 
         if (!primeraLetra) {
@@ -181,6 +187,8 @@ public class Modelo {
             letras.get(letras.size() - 1).setVisible(true);
             control.dibujarLetra(letras.get(letras.size() - 1));
         }
+        
+        return letras.get(letras.size() - 1);
 
     }
 
@@ -200,7 +208,6 @@ public class Modelo {
             for (int i = 0; i < numeros.size(); i++) {
                 if (numeros.get(i).getText().equals(textoNumero)) {
                     num = generarNuevoNumero();
-
                     i = 0;
                 }
             }
@@ -254,7 +261,11 @@ public class Modelo {
                 auxiliar.setPulsaciones(n);
                 auxiliar.generarColorPulsacion();
                 if (n <= 0) {
-                    letras.remove(i);
+                    
+                    timers.get(letras.get(i).getId()).stop();
+                    letras.remove(i);                    
+                    timers.remove(letras.get(i).getId());
+                    
                     auxiliar.setVisible(false);
                     puntuacion++;
                     aciertosSeguidos++;
@@ -294,34 +305,55 @@ public class Modelo {
      * choque con la bandeja.
      *
      */
-    public void crearTimer() {
+    public void lanzaLetras() {
         temporizador = new Timer(tiempoCreacion, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
-                    letraAleatoria();
-                    numeroAleatorio();
+                if (tiempo == 550 || tiempo == 700) {
+                    if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
+                        // numeroAleatorio();
+                    }
                 }
+
+                if (contadorTiempo <= 0 || contadorTiempo >= tiempo) {
+                    
+                    moverLetra(letraAleatoria());
+                    //establecerVelocidad();
+                }
+
                 contadorTiempo += 50;
 
                 if (contadorTiempo >= tiempo) {
                     contadorTiempo = 0;
                 }
-                for (int i = 0; i < letras.size(); i++) {
-                    Letra auxiliar = letras.get(i);
-                    comprobarChoque();
-                    auxiliar.mover();
-                }
 
-                for (int i = 0; i < numeros.size(); i++) {
-                    Letra auxiliar = numeros.get(i);
-                    comprobarChoque();
-                    auxiliar.mover();
-                }
+                comprobarLetras();
+                comprobarNumeros();
+
             }
         });
         temporizador.start();
+    }
+
+    public void comprobarLetras() {
+        for (int i = 0; i < letras.size(); i++) {
+            Letra auxiliar = letras.get(i);
+            comprobarChoque();
+            //auxiliar.mover();
+        }
+    }
+
+    public void comprobarNumeros() {
+        for (int i = 0; i < numeros.size(); i++) {
+            Letra auxiliar = numeros.get(i);
+            comprobarChoque();
+            auxiliar.mover();
+        }
+    }
+
+    public void iniciarNumeros() {
+        numeroAleatorio();
     }
 
     /**
@@ -329,7 +361,11 @@ public class Modelo {
      */
     public void fin() {
         temporizador.stop();
+        for (int i = 0; i < timers.size(); i++) {
+            timers.get(i).stop();
+        }
         control.fin();
+        
     }
 
     /**
@@ -347,8 +383,8 @@ public class Modelo {
                 letras.get(i).cambiarDireccion();
 
             } else if (letras.get(i).getY() <= 40
-                    && letras.get(i).getX() > bandejaInf.getX() - 40
-                    && letras.get(i).getX() < bandejaInf.getX() + 95
+                    && letras.get(i).getX() > bandejaSup.getX() - 40
+                    && letras.get(i).getX() < bandejaSup.getX() + 95
                     && letras.get(i).getDireccion() == 1) {
                 letras.get(i).cambiarDireccion();
             }
@@ -380,5 +416,33 @@ public class Modelo {
     public int getNivelActual() {
         return nivelActual;
     }
+
+    public Timer getTemporizador() {
+        return temporizador;
+    }
+
+    public void pararTimer() {
+        temporizador.stop();
+    }
+
+    public void iniciarTimer() {
+        temporizador.start();
+    }
+    
+    public void moverLetra(Letra letra){
+        int veloTimer=letra.getVelocidad();
+        
+        Timer timerMover = new Timer(veloTimer,new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                letra.mover();
+            }
+        });
+        timers.add(timerMover);
+        letra.setIdTimer(timers.size()-1);
+        timerMover.start();
+    }
+
+
 
 }

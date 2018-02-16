@@ -32,6 +32,7 @@ public class Letra extends JButton {
 
     private int posX;
     private int posY = - 50;
+    private int id;
 
     /*CONSTRUCTOR*/
     public Letra(Modelo modelo, String letra) {
@@ -47,21 +48,37 @@ public class Letra extends JButton {
         dibujarPanel();
     }
 
-    
     public void generarVelocidad() {
-        this.velocidad = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+        int n = (int) Math.floor(Math.random() * (5 - 1 + 1) + 1);
+        switch (n) {
+            case 1:
+                velocidad = 100;
+                break;
+            case 2:
+                velocidad = 90;
+                break;
+            case 3:
+                velocidad = 80;
+                break;
+            case 4:
+                velocidad = 70;
+                break;
+            case 5:
+                velocidad = 60;
+                break;
+        }
     }
 
     /**
-     * Genera mediante un aletorio el numero de pulsaciones necesarios para elimianr una letra.
+     * Genera mediante un aletorio el numero de pulsaciones necesarios para
+     * elimianr una letra.
      */
     public void generarPulsaciones() {
         this.pulsaciones = (int) Math.floor(Math.random() * (3 - 1 + 1) + 1);
         generarColorPulsacion();
     }
-    
-    
-    public void generarColorPulsacion(){
+
+    public void generarColorPulsacion() {
         switch (pulsaciones) {
             case 1:
                 this.setForeground(Color.GREEN);
@@ -154,8 +171,18 @@ public class Letra extends JButton {
     public void setPulsaciones(int pulsaciones) {
         this.pulsaciones = pulsaciones;
     }
-    
-    
-    
 
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setIdTimer(int id) {
+        this.id=id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    
 }

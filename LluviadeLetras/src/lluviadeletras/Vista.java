@@ -31,12 +31,14 @@ public class Vista extends JFrame {
     private Controlador control;
     private JMenuBar mbMenu;
     private ArrayList<JMenuItem> niveles;
-    private JLabel etiquetaPuntos, nivelActual;
+    private JLabel etiquetaPuntos, etiquetaNivel,etiquetaNombre;
     private int nivel;
     private FondoImagen fondo;
+    private String nombre;
 
-    public Vista(Controlador control) {
+    public Vista(Controlador control,String nombre) {
         this.control = control;
+        this.nombre=nombre;
         this.addKeyListener(control);
         this.nivel = 1;
 
@@ -54,7 +56,7 @@ public class Vista extends JFrame {
         this.setResizable(false);
         this.setLocation(400, 50);
         crearMenu();
-        crearEtiquetaPuntosNivel();
+        crearEtiquetas();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -78,6 +80,7 @@ public class Vista extends JFrame {
         this.setJMenuBar(mbMenu);
         crearMenuArchivo();
         crearMenuNivel();
+        crearMenuConfig();
     }
 
     /**
@@ -118,13 +121,34 @@ public class Vista extends JFrame {
             char num = letra.charAt(0);
             miLvl.setAccelerator(KeyStroke.getKeyStroke(num, KeyEvent.CTRL_MASK));
         }
+    }
 
+    public void crearMenuConfig() {
+        JMenu config = new JMenu("Configuracion");
+        
+        JMenuItem miParar = new JMenuItem("Parar partida");
+        miParar.addActionListener(control);
+
+        JMenuItem miReanudar = new JMenuItem("Reanudar partida");
+        miReanudar.addActionListener(control);
+
+        JMenuItem miNombreUsuario = new JMenuItem("Cambiar nombre de usuario");
+        miNombreUsuario.addActionListener(control);
+
+        miParar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, KeyEvent.CTRL_MASK));
+        miReanudar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, KeyEvent.CTRL_MASK));
+        miNombreUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_SHIFT,KeyEvent.CTRL_MASK));
+        
+        mbMenu.add(config);
+        config.add(miParar);
+        config.add(miReanudar);
+        config.add(miNombreUsuario);
     }
 
     /**
      * Crea las etiquetas de la puntuacion y el nivel
      */
-    public void crearEtiquetaPuntosNivel() {
+    public void crearEtiquetas() {
         CustomLetra cl = new CustomLetra();
 
         etiquetaPuntos = new JLabel("PUNTOS: ");
@@ -133,11 +157,17 @@ public class Vista extends JFrame {
         etiquetaPuntos.setFont(cl.MyFont(1, 31f));
         etiquetaPuntos.setForeground(Color.WHITE);
 
-        nivelActual = new JLabel("NIVEL " + nivel);
-        fondo.add(nivelActual);
-        nivelActual.setBounds(410, 10, 300, 40);
-        nivelActual.setFont(cl.MyFont(1, 31f));
-        nivelActual.setForeground(Color.WHITE);
+        etiquetaNivel = new JLabel("NIVEL " + nivel);
+        fondo.add(etiquetaNivel);
+        etiquetaNivel.setBounds(410, 10, 300, 40);
+        etiquetaNivel.setFont(cl.MyFont(1, 31f));
+        etiquetaNivel.setForeground(Color.WHITE);
+        
+        etiquetaNombre = new JLabel(nombre);
+        fondo.add(etiquetaNombre);
+        etiquetaNombre.setBounds(50, 10, 370, 40);
+        etiquetaNombre.setFont(cl.MyFont(1, 31f));
+        etiquetaNombre.setForeground(Color.WHITE);
     }
 
     /**
@@ -180,7 +210,7 @@ public class Vista extends JFrame {
     }
 
     public void actualizaNivel(int valor) {
-        nivelActual.setText("Nivel: " + valor);
+        etiquetaNivel.setText("Nivel: " + valor);
     }
 
     public int getNivel() {
@@ -194,4 +224,11 @@ public class Vista extends JFrame {
             etiquetaPuntos.setForeground(Color.WHITE);
         }
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+        etiquetaNombre.setText(nombre);
+    }
+    
+    
 }
